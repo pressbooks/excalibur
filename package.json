@@ -1,0 +1,34 @@
+
+{
+  "name": "@pressbooks/excalibur",
+  "version": "0.1.0",
+  "main": "Gruntfile.js",
+  "author": "Pressbooks (Book Oven Inc.) <code@pressbooks.com>",
+  "license": "GPL-2.0+",
+  "scripts": {
+    "localize": "grunt i18n",
+    "readme": "grunt readme",
+    "dev": "cross-env NODE_ENV=development webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "lint": "stylelint \"assets/styles/**/*.scss\" --syntax scss"
+  },
+  "engines": {
+    "node": ">= 6.9.4"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-wp-i18n": "~0.5.0",
+    "grunt-wp-readme-to-markdown": "~1.0.0",
+    "laravel-mix": "^1.0",
+    "stylelint": "^7.12.0",
+    "stylelint-config-standard": "^16.0.0"
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "indentation": 2
+    }
+  }
+}
