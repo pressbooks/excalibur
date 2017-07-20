@@ -136,7 +136,7 @@ class Entry {
 	 * @param int $sac_newstatus
 	 * @param string $sac_thexml
 	 */
-	function __construct( $sac_newstatus, $sac_thexml ) {
+	public function __construct( $sac_newstatus, $sac_thexml ) {
 		// Store the status
 		$this->status = $sac_newstatus;
 		// Store the xml

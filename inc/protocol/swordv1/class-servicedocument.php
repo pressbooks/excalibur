@@ -74,7 +74,7 @@ class ServiceDocument {
 	 * @param int $sac_newstatus
 	 * @param string $sac_thexml (optional)
 	 */
-	function __construct( $sac_theurl, $sac_newstatus, $sac_thexml = '' ) {
+	public function __construct( $sac_theurl, $sac_newstatus, $sac_thexml = '' ) {
 
 		// Store the URL
 		$this->url = $sac_theurl;

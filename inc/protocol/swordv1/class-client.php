@@ -9,7 +9,7 @@ class Client {
 	 *
 	 * @var array
 	 */
-	private $headers = [
+	protected $headers = [
 		'User-Agent: Pressbooks SWORD V1 Client (0.0.1) https://github.com/pressbooks',
 		'Accept: application/xml',
 	];
@@ -19,14 +19,14 @@ class Client {
 	 *
 	 * @var bool
 	 */
-	private $debug = false;
+	protected $debug = false;
 
 	/**
 	 * CURLOPT_STDERR
 	 *
 	 * @var resource
 	 */
-	private $debugStderr;
+	protected $debugStderr;
 
 	/**
 	 * Client constructor.
@@ -53,7 +53,7 @@ class Client {
 	 * @return ServiceDocument
 	 * @throws \Exception
 	 */
-	function serviceDocument( $sac_url, $sac_u, $sac_p, $sac_obo = '' ) {
+	public function serviceDocument( $sac_url, $sac_u, $sac_p, $sac_obo = '' ) {
 
 		$sac_curl = $this->curlInit( $sac_url, $sac_u, $sac_p );
 
@@ -100,7 +100,7 @@ class Client {
 	 * @return Entry|ErrorDocument
 	 * @throws \Exception
 	 */
-	function deposit(
+	public function deposit(
 		$sac_url,
 		$sac_u,
 		$sac_p,
@@ -184,7 +184,7 @@ class Client {
 	 *
 	 * @return resource
 	 */
-	private function curlInit( $sac_url, $sac_user, $sac_password ) {
+	protected function curlInit( $sac_url, $sac_user, $sac_password ) {
 		// Initialise the curl object
 		$sac_curl = curl_init();
 
@@ -213,7 +213,7 @@ class Client {
 	/**
 	 * @param resource $sac_curl
 	 */
-	private function curlClose( $sac_curl ) {
+	protected function curlClose( $sac_curl ) {
 		curl_close( $sac_curl );
 		if ( $this->debug ) {
 			rewind( $this->debugStderr );
@@ -226,7 +226,7 @@ class Client {
 	 * @param &$headers
 	 * @param string $sac_fname
 	 */
-	private function setContentDispositionHeaders( &$headers, $sac_fname ) {
+	protected function setContentDispositionHeaders( &$headers, $sac_fname ) {
 		$index = strpos( strrev( $sac_fname ), '/' );
 		if ( $index !== false ) {
 			$index = strlen( $sac_fname ) - $index;
@@ -244,7 +244,7 @@ class Client {
 	 *
 	 * @throws \Exception
 	 */
-	private function parseFailure( $e, $sac_status, $sac_resp ) {
+	protected function parseFailure( $e, $sac_status, $sac_resp ) {
 		preg_match( '#<body[^>]*>(.*?)</body>#is', $sac_resp, $matches );
 		if ( ! empty( $matches[1] ) ) {
 			throw new \Exception( "[{$sac_status}] " . wp_strip_all_tags( $matches[1], true ), $sac_status, $e );

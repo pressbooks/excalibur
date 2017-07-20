@@ -17,7 +17,7 @@ class ErrorDocument extends Entry {
 	 * @param int $sac_newstatus
 	 * @param string $sac_thexml
 	 */
-	function __construct( $sac_newstatus, $sac_thexml ) {
+	public function __construct( $sac_newstatus, $sac_thexml ) {
 		// Call the super constructor
 		parent::__construct( $sac_newstatus, $sac_thexml );
 	}
@@ -28,7 +28,7 @@ class ErrorDocument extends Entry {
 	 * @param \SimpleXMLElement $sac_dr
 	 * @param array $sac_ns
 	 */
-	function buildHierarchy( $sac_dr, $sac_ns ) {
+	public function buildHierarchy( $sac_dr, $sac_ns ) {
 
 		// Call the super version
 		parent::buildHierarchy( $sac_dr, $sac_ns );

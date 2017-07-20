@@ -155,7 +155,7 @@ class MetsSwap {
 	 * @param string $working_dir
 	 * @param string $sac_fileout
 	 */
-	function __construct( $working_dir, $sac_fileout ) {
+	public function __construct( $working_dir, $sac_fileout ) {
 		$this->workingDir = untrailingslashit( $working_dir );
 		$this->fileOut = $sac_fileout;
 	}
@@ -163,105 +163,105 @@ class MetsSwap {
 	/**
 	 * @param string $sac_thetype
 	 */
-	function setType( $sac_thetype ) {
+	public function setType( $sac_thetype ) {
 		$this->type = $sac_thetype;
 	}
 
 	/**
 	 * @param string $sac_thetitle
 	 */
-	function setTitle( $sac_thetitle ) {
+	public function setTitle( $sac_thetitle ) {
 		$this->title = $this->clean( $sac_thetitle );
 	}
 
 	/**
 	 * @param string $sac_thetitle
 	 */
-	function setAbstract( $sac_thetitle ) {
+	public function setAbstract( $sac_thetitle ) {
 		$this->abstract = $this->clean( $sac_thetitle );
 	}
 
 	/**
 	 * @param string $sac_creator
 	 */
-	function addCreator( $sac_creator ) {
+	public function addCreator( $sac_creator ) {
 		$this->creators[] = $this->clean( $sac_creator );
 	}
 
 	/**
 	 * @param string $sac_subject
 	 */
-	function addSubject( $sac_subject ) {
+	public function addSubject( $sac_subject ) {
 		$this->subjects[] = $this->clean( $sac_subject );
 	}
 
 	/**
 	 * @param string $sac_provenance
 	 */
-	function addProvenance( $sac_provenance ) {
+	public function addProvenance( $sac_provenance ) {
 		$this->provenances[] = $this->clean( $sac_provenance );
 	}
 
 	/**
 	 * @param string $sac_right
 	 */
-	function addRights( $sac_right ) {
+	public function addRights( $sac_right ) {
 		$this->rights[] = $this->clean( $sac_right );
 	}
 
 	/**
 	 * @param string $sac_theidentifier
 	 */
-	function setIdentifier( $sac_theidentifier ) {
+	public function setIdentifier( $sac_theidentifier ) {
 		$this->identifier = $sac_theidentifier;
 	}
 
 	/**
 	 * @param string $sac_thestatus
 	 */
-	function setStatusStatement( $sac_thestatus ) {
+	public function setStatusStatement( $sac_thestatus ) {
 		$this->statusStatement = $sac_thestatus;
 	}
 
 	/**
 	 * @param string $sac_thecopyrightholder
 	 */
-	function setCopyrightHolder( $sac_thecopyrightholder ) {
+	public function setCopyrightHolder( $sac_thecopyrightholder ) {
 		$this->copyrightHolder = $sac_thecopyrightholder;
 	}
 
 	/**
 	 * @param string $sac_thecustodian
 	 */
-	function setCustodian( $sac_thecustodian ) {
+	public function setCustodian( $sac_thecustodian ) {
 		$this->custodian = $this->clean( $sac_thecustodian );
 	}
 
 	/**
 	 * @param string $sac_thecitation
 	 */
-	function setCitation( $sac_thecitation ) {
+	public function setCitation( $sac_thecitation ) {
 		$this->citation = $this->clean( $sac_thecitation );
 	}
 
 	/**
 	 * @param string $sac_thelanguage
 	 */
-	function setLanguage( $sac_thelanguage ) {
+	public function setLanguage( $sac_thelanguage ) {
 		$this->language = $this->clean( $sac_thelanguage );
 	}
 
 	/**
 	 * @param string $sac_thedta
 	 */
-	function setDateAvailable( $sac_thedta ) {
+	public function setDateAvailable( $sac_thedta ) {
 		$this->dateAvailable = $sac_thedta;
 	}
 
 	/**
 	 * @param string $sac_thepublisher
 	 */
-	function setPublisher( $sac_thepublisher ) {
+	public function setPublisher( $sac_thepublisher ) {
 		$this->publisher = $sac_thepublisher;
 	}
 
@@ -271,7 +271,7 @@ class MetsSwap {
 	 *
 	 * @throws \Exception
 	 */
-	function addFile( $sac_thefile, $sac_themimetype ) {
+	public function addFile( $sac_thefile, $sac_themimetype ) {
 		if ( ! file_exists( $sac_thefile ) ) {
 			throw new \Exception( "File not found: $sac_thefile" );
 		}
@@ -285,13 +285,12 @@ class MetsSwap {
 	 *
 	 * @throws \Exception
 	 */
-	function create() {
+	public function create() {
 		// Write the metadata (mets) file
 		$fh = @fopen( $this->workingDir . '/' . $this->fileMeta, 'w' ); // @codingStandardsIgnoreLine
 		if ( ! $fh ) {
 			throw new \Exception(
-				'Error writing metadata file (' .
-				$this->workingDir . '/' . $this->fileMeta . ')'
+				"Error writing metadata file ({$this->workingDir}/{$this->fileMeta})"
 			);
 		}
 		$this->writeHeader( $fh );
@@ -322,7 +321,7 @@ class MetsSwap {
 	/**
 	 * @param resource $fh
 	 */
-	function writeHeader( $fh ) {
+	protected function writeHeader( $fh ) {
 		fwrite( $fh, '<?xml version="1.0" encoding="utf-8" standalone="no" ?' . ">\n" );
 		fwrite( $fh, "<mets ID=\"sort-mets_mets\" OBJID=\"sword-mets\" LABEL=\"DSpace SWORD Item\" PROFILE=\"DSpace METS SIP Profile 1.0\" xmlns=\"http://www.loc.gov/METS/\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd\">\n" );
 		fwrite( $fh, "\t<metsHdr CREATEDATE=\"2008-09-04T00:00:00\">\n" );
@@ -339,7 +338,7 @@ class MetsSwap {
 	/**
 	 * @param resource $fh
 	 */
-	function writeDmdSec( $fh ) {
+	protected function writeDmdSec( $fh ) {
 		fwrite( $fh, "<dmdSec ID=\"sword-mets-dmd-1\" GROUPID=\"sword-mets-dmd-1_group-1\">\n" );
 		fwrite( $fh, "<mdWrap LABEL=\"SWAP Metadata\" MDTYPE=\"OTHER\" OTHERMDTYPE=\"EPDCX\" MIMETYPE=\"text/xml\">\n" );
 		fwrite( $fh, "<xmlData>\n" );
@@ -483,7 +482,7 @@ class MetsSwap {
 	/**
 	 * @param resource $fh
 	 */
-	function writeFileGrp( $fh ) {
+	protected function writeFileGrp( $fh ) {
 		fwrite( $fh, "\t<fileSec>\n" );
 		fwrite( $fh, "\t\t<fileGrp ID=\"sword-mets-fgrp-1\" USE=\"CONTENT\">\n" );
 		for ( $i = 0; $i < $this->filecount; $i++ ) {
@@ -502,7 +501,7 @@ class MetsSwap {
 	/**
 	 * @param resource $fh
 	 */
-	function writeStructMap( $fh ) {
+	protected function writeStructMap( $fh ) {
 		fwrite( $fh, "\t<structMap ID=\"sword-mets-struct-1\" LABEL=\"structure\" TYPE=\"LOGICAL\">\n" );
 		fwrite( $fh, "\t\t<div ID=\"sword-mets-div-1\" DMDID=\"sword-mets-dmd-1\" TYPE=\"SWORD Object\">\n" );
 		fwrite( $fh, "\t\t\t<div ID=\"sword-mets-div-2\" TYPE=\"File\">\n" );
@@ -517,7 +516,7 @@ class MetsSwap {
 	/**
 	 * @param resource $fh
 	 */
-	function writeFooter( $fh ) {
+	protected function writeFooter( $fh ) {
 		fwrite( $fh, "</mets>\n" );
 	}
 
@@ -526,7 +525,7 @@ class MetsSwap {
 	 *
 	 * @return string
 	 */
-	function valueString( $value ) {
+	protected function valueString( $value ) {
 		return '<epdcx:valueString>' . $value . "</epdcx:valueString>\n";
 	}
 
@@ -536,7 +535,7 @@ class MetsSwap {
 	 *
 	 * @return string
 	 */
-	function valueStringSesURI( $ses_uri, $value ) {
+	protected function valueStringSesURI( $ses_uri, $value ) {
 		return '<epdcx:valueString epdcx:sesURI="' . $ses_uri . '">' . $value . "</epdcx:valueString>\n";
 	}
 
@@ -545,7 +544,7 @@ class MetsSwap {
 	 * @param string $property_uri
 	 * @param string $value
 	 */
-	function statement( $fh, $property_uri, $value ) {
+	protected function statement( $fh, $property_uri, $value ) {
 		fwrite(
 			$fh,
 			'<epdcx:statement epdcx:propertyURI="' . $property_uri . "\">\n" .
@@ -559,7 +558,7 @@ class MetsSwap {
 	 * @param string $property_uri
 	 * @param string $value
 	 */
-	function statementValueURI( $fh, $property_uri, $value ) {
+	protected function statementValueURI( $fh, $property_uri, $value ) {
 		fwrite(
 			$fh,
 			'<epdcx:statement epdcx:propertyURI="' . $property_uri . '" ' .
@@ -573,7 +572,7 @@ class MetsSwap {
 	 * @param string $ves_uri
 	 * @param string $value
 	 */
-	function statementVesURI( $fh, $property_uri, $ves_uri, $value ) {
+	protected function statementVesURI( $fh, $property_uri, $ves_uri, $value ) {
 		fwrite(
 			$fh,
 			'<epdcx:statement epdcx:propertyURI="' . $property_uri . '" ' .
@@ -589,7 +588,7 @@ class MetsSwap {
 	 * @param string $ves_uri
 	 * @param string $value
 	 */
-	function statementVesURIValueURI( $fh, $property_uri, $ves_uri, $value ) {
+	protected function statementVesURIValueURI( $fh, $property_uri, $ves_uri, $value ) {
 		fwrite(
 			$fh,
 			'<epdcx:statement epdcx:propertyURI="' . $property_uri . '" ' .
@@ -603,7 +602,7 @@ class MetsSwap {
 	 *
 	 * @return string
 	 */
-	function clean( $data ) {
+	protected function clean( $data ) {
 		return str_replace( '&#039;', '&apos;', htmlspecialchars( $data, ENT_QUOTES ) );
 	}
 
