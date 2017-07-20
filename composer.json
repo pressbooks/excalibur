@@ -2,18 +2,29 @@
     "name": "pressbooks/excalibur",
     "description": "Excalibur is a SWORD protocol client for Pressbooks.",
     "type": "wordpress-plugin",
-    "require": {
-        "composer/installers": "~1.3",
-        "pressbooks/mix": "~2.0"
-    },
-    "require-dev": {
-        "humanmade/coding-standards": "^0.2.1"
-    },
     "license": "GPL-2.0+",
     "authors": [
         {
             "name": "Pressbooks (Book Oven Inc.)",
             "email": "code@pressbooks.com"
         }
-    ]
+    ],
+    "require": {
+        "composer/installers": "~1.3",
+        "pressbooks/mix": "~2.0",
+        "pressbooks/swordapp": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.5",
+        "humanmade/coding-standards": "^0.2.1"
+    },
+    "scripts": {
+        "test": [
+            "vendor/bin/phpunit --configuration phpunit.xml --coverage-clover coverage.xml",
+            "@standards"
+        ],
+        "standards": [
+            "vendor/bin/phpcs --standard=phpcs.ruleset.xml *.php inc/ bin/"
+        ]
+    }
 }

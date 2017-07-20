@@ -1,1 +1,9 @@
-// TODO
+@import '~select2/src/scss/core.scss';
+
+td .row {
+  margin-bottom: 0.5em;
+}
+
+textarea {
+  width: 500px;
+}
