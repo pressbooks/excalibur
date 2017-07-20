@@ -120,7 +120,7 @@ class Deposit {
 
 		$exports = \Pressbooks\Utility\latest_exports();
 		$exports_dir = \Pressbooks\Modules\Export\Export::getExportFolder();
-		foreach ( [ 'pdf', 'epub', 'mobi' ] as $format ) {
+		foreach ( self::$supportedExportTypes as $format ) {
 			if ( isset( $exports[ $format ] ) ) {
 				$file = untrailingslashit( $exports_dir ) . '/' . $exports[ $format ];
 				$package->addFile( $file, $this->mimeType( $file ) );
