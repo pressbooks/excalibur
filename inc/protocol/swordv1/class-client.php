@@ -2,6 +2,10 @@
 
 namespace Excalibur\Protocol\SwordV1;
 
+/**
+ * @copyright Stuart Lewis (stuart@stuartlewis.com)
+ * @license New BSD License
+ */
 class Client {
 
 	/**
@@ -50,7 +54,7 @@ class Client {
 	 * @param  string $sac_p
 	 * @param  string $sac_obo (optional)
 	 *
-	 * @return ServiceDocument
+	 * @return ServiceDocument|ErrorDocument
 	 * @throws \Exception
 	 */
 	public function serviceDocument( $sac_url, $sac_u, $sac_p, $sac_obo = '' ) {
@@ -77,7 +81,14 @@ class Client {
 				exit;
 			}
 		} else {
-			$sac_sdresponse = new ServiceDocument( $sac_url, $sac_status );
+			$sac_sdresponse = new ErrorDocument( $sac_url, $sac_status );
+			if ( ! in_array( $sac_sdresponse->status, [ 401, 403, 404 ], true ) ) {
+				// Try to parse the results and get more info
+				$sac_xml = @new \SimpleXMLElement( $sac_resp ); // @codingStandardsIgnoreLine
+				$sac_ns = $sac_xml->getNamespaces( true );
+				// Build the deposit response object
+				$sac_sdresponse->buildHierarchy( $sac_xml, $sac_ns );
+			}
 		}
 		// Return the servicedocument object
 		return $sac_sdresponse;
@@ -158,13 +169,14 @@ class Client {
 			}
 		} else {
 			try {
-				// Parse the result
 				$sac_dresponse = new ErrorDocument( $sac_status, $sac_resp );
-				// Get the deposit results
-				$sac_xml = @new \SimpleXMLElement( $sac_resp ); // @codingStandardsIgnoreLine
-				$sac_ns = $sac_xml->getNamespaces( true );
-				// Build the deposit response object
-				$sac_dresponse->buildHierarchy( $sac_xml, $sac_ns );
+				if ( ! in_array( $sac_dresponse->status, [ 401, 403, 404 ], true ) ) {
+					// Try to parse the results and get more info
+					$sac_xml = @new \SimpleXMLElement( $sac_resp ); // @codingStandardsIgnoreLine
+					$sac_ns = $sac_xml->getNamespaces( true );
+					// Build the deposit response object
+					$sac_dresponse->buildHierarchy( $sac_xml, $sac_ns );
+				}
 			} catch ( \Exception $e ) {
 				$this->parseFailure( $e, $sac_status, $sac_resp );
 				exit;

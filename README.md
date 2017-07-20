@@ -4,30 +4,37 @@
 **Requires at least:** 4.8  
 **Tested up to:** 4.8  
 **Stable tag:** 0.1.0  
-**License:** New BSD Licence  
+**Licenses:** GPLv2 or later, New BSD License  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
 Excalibur is a [SWORD](http://swordapp.org/about/) client for Pressbooks.
 
 ## License ## 
 
-The SWORD library was originally written by Stuart Lewis (stuart@stuartlewis.com) as
-part of the JISC funded SWORD2 project and licenced with the New BSD Licence. 
+Pressbooks code is License under GPLv2 or later.
 
-This is a modified version that acknowledges the copyright and includes the 
-original disclaimer.
-
-See the file LICENSE in the distribution directory.
+The SWORD client library was originally written by Stuart Lewis (stuart@stuartlewis.com) 
+as part of a JISC funded project and is licenced under the New BSD Licence. This project contains 
+a modified version of that library. We acknowledge the copyright and include the original 
+disclaimer for those files. See the separate LICENSE file in the `inc/protocol/swordv1/` folder
+for more info.
 
 ## Installation ##
 
-`composer require pressbooks/excalibur`
+    composer require pressbooks/excalibur
+    
+## Testing and coding standards ##
+
+    composer install
+    composer test
+    composer standards    
+
+## Assets ##
+
+    yarn
+    yarn production
 
 ## Changelog ##
-
-### 0.1.0 ###
-Nothing much to see here.
-
-## Upgrade Notice ##
 
 ### 0.1.0 ###
 Nothing much to see here.

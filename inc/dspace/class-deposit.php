@@ -2,17 +2,21 @@
 
 namespace Excalibur\Dspace;
 
+use function \Pressbooks\Utility\getset;
+
 class Deposit {
+
+	/**
+	 * @see \Pressbooks\Utility\latest_exports
+	 *
+	 * @var array
+	 */
+	static public $supportedExportTypes = [ 'pdf', 'print-pdf', 'epub', 'epub3', 'mobi', 'xhtml' ];
 
 	/**
 	 * @var \Excalibur\Protocol\SwordV1\Client
 	 */
 	protected $sword;
-
-	/**
-	 * @var \Excalibur\Protocol\SwordV1\ServiceDocument
-	 */
-	protected $sd;
 
 	/**
 	 * @var string
@@ -59,7 +63,6 @@ class Deposit {
 			$this->sword = $sword;
 		} else {
 			$this->sword = new \Excalibur\Protocol\SwordV1\Client();
-			$this->sword->setDebug( true );
 		}
 	}
 
@@ -74,52 +77,47 @@ class Deposit {
 	 * @return $this
 	 * @throws \Exception
 	 */
-	public function connect() {
-		try {
-			$sd = $this->sword->serviceDocument( $this->url, $this->username, $this->password );
-		} catch ( \Exception $e ) {
-			$sd = new \Excalibur\Protocol\SwordV1\ServiceDocument( $this->url, 500 );
+	public function queryForDepositUrls() {
+
+		$sd = $this->sword->serviceDocument( $this->url, $this->username, $this->password );
+
+		if ( $sd instanceof \Excalibur\Protocol\SwordV1\ErrorDocument ) {
+			throw new \Exception(
+				! empty( $sd->summary ) ? $sd->summary : $sd->statusMessage,
+				$sd->status
+			);
 		}
 
-		if ( $sd->status !== 200 ) {
-			throw new \Exception( $sd->statusMessage );
-		}
-
-		$this->sd = $sd;
+		// TODO
+		echo htmlentities( print_r( (array) $sd, true ) );
 
 		return $this;
 	}
 
-
 	/**
+	 * @param array $data form data
+	 *
 	 * @return $this
 	 * @throws \Exception
 	 */
-	public function send() {
+	public function buildAndSendPackage( $data ) {
 
-		if ( ! $this->sd ) {
-			throw new \Exception( 'No connection' );
-		}
-
-		echo '<h3>Service Document</h3>';
-		echo '<pre>';
-		echo "Received HTTP status code: {$this->sd->status} ({$this->sd->statusMessage}), URL: {$this->url}\n";
-		echo htmlentities( print_r( (array) $this->sd, true ) );
-		echo '</pre>';
-
-		$this->swordV1();
+		$this->swordV1( $data );
 
 		return $this;
 	}
 
 	/**
-	 *
+	 * @param array $data form data
+	 * @throws \Exception
 	 */
-	protected function swordV1() {
-		$this->tmpDir = $this->createTmpDir();
-		$package = new \Excalibur\Protocol\SwordV1\Packager\MetsSwap( $this->createTmpDir(), time() . '.zip' );
+	protected function swordV1( $data ) {
 
-		// Add files
+		$this->tmpDir = $this->createTmpDir();
+		$package = new \Excalibur\Protocol\SwordV1\Packager\MetsSwap( $this->tmpDir, time() . '.zip' );
+
+		// Add files ------------------------------------------------------------------------------
+
 		$exports = \Pressbooks\Utility\latest_exports();
 		$exports_dir = \Pressbooks\Modules\Export\Export::getExportFolder();
 		foreach ( [ 'pdf', 'epub', 'mobi' ] as $format ) {
@@ -129,32 +127,63 @@ class Deposit {
 			}
 		}
 
-		// Add meta
-		$test_type = 'http://purl.org/eprint/entityType/ScholarlyWork';
-		$test_title = 'Pressbooks Test';
-		$test_abstract = 'This is a test.';
-		$test_creators = [ 'Lewis, Stuart', 'Chartrand, Dac', 'Zimmerman, Ned' ];
-		$test_citation = 'Allinson, J., Francois, S., Lewis, S. SWORD: Simple Web-service Offering Repository Deposit, Ariadne, Issue 54, January 2008. Online at http://www.ariadne.ac.uk/issue54/';
-		$test_identifier = 'https://pressbooks.dev/book/';
-		$test_dateavailable = '2017-07';
-		$test_copyrightholder = 'Stuart Lewis';
-		$test_custodian = 'Stuart Lewis';
-		$test_statusstatement = 'http://purl.org/eprint/status/PeerReviewed';
+		// Add meta --------------------------------------------------------------------------------
 
-		$package->setCustodian( $test_custodian );
-		$package->setType( $test_type );
-		$package->setTitle( $test_title );
-		$package->setAbstract( $test_abstract );
-		foreach ( $test_creators as $test_creator ) {
+		// Hard code the type because the other options don't make much sense for us
+		// @see http://www.ukoln.ac.uk/repositories/digirep/index/Eprints_EntityType_Vocabulary_Encoding_Scheme
+		$package->setType( 'http://purl.org/eprint/entityType/ScholarlyWork' );
+
+		// Can be either `http://purl.org/eprint/status/PeerReviewed` OR `http://purl.org/eprint/status/NonPeerReviewed`
+		// @see http://www.ukoln.ac.uk/repositories/digirep/index/Eprints_Status_Vocabulary_Encoding_Scheme
+		$package->setStatusStatement( getset( $data, 'sword_status_statement' ) );
+
+		// An unambiguous reference to the resource within a given context.
+		$package->setIdentifier( getset( $data, 'sword_identifier' ) );
+
+		// Title
+		$package->setTitle( getset( $data, 'pb_title' ) );
+
+		// Long description
+		$package->setAbstract( getset( $data, 'pb_about_50' ) );
+
+		// Author
+		$package->setCustodian( getset( $data, 'pb_author' ) );
+		$package->addCreator( getset( $data, 'pb_author' ) );
+
+		// Contributing authors
+		foreach ( getset( $data, 'pb_contributing_authors', [] ) as $test_creator ) {
 			$package->addCreator( $test_creator );
 		}
-		$package->setIdentifier( $test_identifier );
-		$package->setDateAvailable( $test_dateavailable );
-		$package->setStatusStatement( $test_statusstatement );
-		$package->setCopyrightHolder( $test_copyrightholder );
-		$package->setCitation( $test_citation );
 
-		// Create file
+		// Format: W3CDTF profile of ISO 8601
+		// @see http://www.w3.org/TR/NOTE-datetime
+		$package->setDateAvailable( getset( $data, 'pb_publication_date' ) );
+
+		// A person or organization owning copyright in the resource.
+		$package->setCopyrightHolder( getset( $data, 'pb_copyright_holder' ) );
+
+		// Bibliographic Citation
+		$package->setCitation( getset( $data, 'sword_citation' ) );
+
+		// Language - two letter code
+		$package->setLanguage( getset( $data, 'pb_language' ) );
+
+		// TODO: Initial testing of the following items didn't show up in DSpace?
+
+		// Publisher
+		$package->setPublisher( getset( $data, 'pb_publisher' ) );
+
+		// Subject
+		// $package->addSubject( '' );
+
+		// A statement of any changes in ownership and custody of the resource since its creation that are significant for its authenticity, integrity, and interpretation.
+		// $package->addProvenance( '' );
+
+		// Information about rights held in and over the resource.
+		// $package->addRights( '' );
+
+		// Create file -----------------------------------------------------------------------------
+
 		$zip = $package->create();
 
 		// Deposit
@@ -168,12 +197,12 @@ class Deposit {
 			'application/zip'
 		);
 
-		echo '<h3>Deposit</h3>';
-		echo '<pre>';
-		echo "File: $zip\n";
-		echo "Received HTTP status code: {$response->status} ({$response->statusMessage}), URL: {$this->depositUrl}\n";
-		echo htmlentities( print_r( (array) $response, true ) );
-		echo '</pre>';
+		if ( $response instanceof \Excalibur\Protocol\SwordV1\ErrorDocument ) {
+			throw new \Exception(
+				! empty( $response->summary ) ? $response->summary : $response->statusMessage,
+				$response->status
+			);
+		}
 	}
 
 	/**

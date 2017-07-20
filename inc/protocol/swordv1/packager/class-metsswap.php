@@ -2,6 +2,10 @@
 
 namespace Excalibur\Protocol\SwordV1\Packager;
 
+/**
+ * @copyright Stuart Lewis (stuart@stuartlewis.com)
+ * @license New BSD License
+ */
 class MetsSwap {
 
 	/**
@@ -326,7 +330,7 @@ class MetsSwap {
 		fwrite( $fh, "<mets ID=\"sort-mets_mets\" OBJID=\"sword-mets\" LABEL=\"DSpace SWORD Item\" PROFILE=\"DSpace METS SIP Profile 1.0\" xmlns=\"http://www.loc.gov/METS/\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd\">\n" );
 		fwrite( $fh, "\t<metsHdr CREATEDATE=\"2008-09-04T00:00:00\">\n" );
 		fwrite( $fh, "\t\t<agent ROLE=\"CUSTODIAN\" TYPE=\"ORGANIZATION\">\n" );
-		if ( isset( $this->custodian ) ) {
+		if ( ! empty( $this->custodian ) ) {
 			fwrite( $fh, "\t\t\t<name>$this->custodian</name>\n" );
 		} else {
 			fwrite( $fh, "\t\t\t<name>Unknown</name>\n" );
@@ -344,7 +348,7 @@ class MetsSwap {
 		fwrite( $fh, "<xmlData>\n" );
 		fwrite( $fh, "<epdcx:descriptionSet xmlns:epdcx=\"http://purl.org/eprint/epdcx/2006-11-16/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://purl.org/eprint/epdcx/2006-11-16/ http://purl.org/eprint/epdcx/xsd/2006-11-16/epdcx.xsd\">\n" );
 		fwrite( $fh, "<epdcx:description epdcx:resourceId=\"sword-mets-epdcx-1\">\n" );
-		if ( isset( $this->type ) ) {
+		if ( ! empty( $this->type ) ) {
 			$this->statementVesURIValueURI(
 				$fh,
 				'http://purl.org/dc/elements/1.1/type',
@@ -352,14 +356,14 @@ class MetsSwap {
 				$this->type
 			);
 		}
-		if ( isset( $this->title ) ) {
+		if ( ! empty( $this->title ) ) {
 			$this->statement(
 				$fh,
 				'http://purl.org/dc/elements/1.1/title',
 				$this->valueString( $this->title )
 			);
 		}
-		if ( isset( $this->abstract ) ) {
+		if ( ! empty( $this->abstract ) ) {
 			$this->statement(
 				$fh,
 				'http://purl.org/dc/terms/abstract',
@@ -394,14 +398,14 @@ class MetsSwap {
 				$this->valueString( $sac_right )
 			);
 		}
-		if ( isset( $this->identifier ) ) {
+		if ( ! empty( $this->identifier ) ) {
 			$this->statement(
 				$fh,
 				'http://purl.org/dc/elements/1.1/identifier',
 				$this->valueString( $this->identifier )
 			);
 		}
-		if ( isset( $this->publisher ) ) {
+		if ( ! empty( $this->publisher ) ) {
 			$this->statement(
 				$fh,
 				'http://purl.org/dc/elements/1.1/publisher',
@@ -423,7 +427,7 @@ class MetsSwap {
 			'http://purl.org/eprint/entityType/Expression'
 		);
 
-		if ( isset( $this->language ) ) {
+		if ( ! empty( $this->language ) ) {
 			$this->statementVesURI(
 				$fh,
 				'http://purl.org/dc/elements/1.1/language',
@@ -439,7 +443,7 @@ class MetsSwap {
 			'http://purl.org/eprint/entityType/Expression'
 		);
 
-		if ( isset( $this->dateAvailable ) ) {
+		if ( ! empty( $this->dateAvailable ) ) {
 			$this->statement(
 				$fh,
 				'http://purl.org/dc/terms/available',
@@ -449,7 +453,7 @@ class MetsSwap {
 				)
 			);
 		}
-		if ( isset( $this->statusStatement ) ) {
+		if ( ! empty( $this->statusStatement ) ) {
 			$this->statementVesURIValueURI(
 				$fh,
 				'http://purl.org/eprint/terms/Status',
@@ -457,14 +461,14 @@ class MetsSwap {
 				$this->statusStatement
 			);
 		}
-		if ( isset( $this->copyrightHolder ) ) {
+		if ( ! empty( $this->copyrightHolder ) ) {
 			$this->statement(
 				$fh,
 				'http://purl.org/eprint/terms/copyrightHolder',
 				$this->valueString( $this->copyrightHolder )
 			);
 		}
-		if ( isset( $this->citation ) ) {
+		if ( ! empty( $this->citation ) ) {
 			$this->statement(
 				$fh,
 				'http://purl.org/eprint/terms/bibliographicCitation',

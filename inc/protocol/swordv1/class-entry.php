@@ -2,6 +2,10 @@
 
 namespace Excalibur\Protocol\SwordV1;
 
+/**
+ * @copyright Stuart Lewis (stuart@stuartlewis.com)
+ * @license New BSD License
+ */
 class Entry {
 
 	/**
@@ -150,6 +154,7 @@ class Entry {
 				$this->statusMessage = 'Accepted';
 				break;
 			case 401:
+			case 403:
 				$this->statusMessage = 'Unauthorized';
 				break;
 			case 412:

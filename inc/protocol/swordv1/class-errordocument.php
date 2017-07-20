@@ -2,6 +2,10 @@
 
 namespace Excalibur\Protocol\SwordV1;
 
+/**
+ * @copyright Stuart Lewis (stuart@stuartlewis.com)
+ * @license New BSD License
+ */
 class ErrorDocument extends Entry {
 
 	/**
