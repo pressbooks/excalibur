@@ -13,7 +13,7 @@ Excalibur is a [SWORD](http://swordapp.org/about/) client for Pressbooks.
 The SWORD library was originally written by Stuart Lewis (stuart@stuartlewis.com) as
 part of the JISC funded SWORD2 project and licenced with the New BSD Licence. 
 
-This is a modified version that acknowledges the original copyright and includes the 
+This is a modified version that acknowledges the copyright and includes the 
 original disclaimer.
 
 See the file LICENSE in the distribution directory.
