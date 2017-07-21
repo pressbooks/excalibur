@@ -81,7 +81,7 @@ class Client {
 				exit;
 			}
 		} else {
-			$sac_sdresponse = new ErrorDocument( $sac_url, $sac_status );
+			$sac_sdresponse = new ErrorDocument( $sac_status, $sac_resp );
 			if ( ! in_array( $sac_sdresponse->status, [ 401, 403, 404 ], true ) ) {
 				// Try to parse the results and get more info
 				$sac_xml = @new \SimpleXMLElement( $sac_resp ); // @codingStandardsIgnoreLine

@@ -63,6 +63,7 @@ class Deposit {
 			$this->sword = $sword;
 		} else {
 			$this->sword = new \Excalibur\Protocol\SwordV1\Client();
+			$this->sword->setDebug( (bool) getenv( 'PB_SWORD_DEBUG' ) );
 		}
 	}
 
@@ -74,7 +75,8 @@ class Deposit {
 	}
 
 	/**
-	 * @return $this
+	 * @return array()
+	 *
 	 * @throws \Exception
 	 */
 	public function queryForDepositUrls() {
@@ -88,23 +90,27 @@ class Deposit {
 			);
 		}
 
-		// TODO
-		echo htmlentities( print_r( (array) $sd, true ) );
+		$deposit_urls = [];
+		foreach ( $sd->workspaces as $workspace ) {
+			foreach ( $workspace->collections as $collection ) {
+				foreach ( $collection->acceptPackaging as $package_type => $package_version ) {
+					if ( $package_type === 'http://purl.org/net/sword-types/METSDSpaceSIP') {
+						$deposit_urls[ (string) $collection->href ] = $collection->collTitle;
+					}
+				}
+			}
+		}
 
-		return $this;
+		return $deposit_urls;
 	}
 
 	/**
 	 * @param array $data form data
 	 *
-	 * @return $this
 	 * @throws \Exception
 	 */
 	public function buildAndSendPackage( $data ) {
-
 		$this->swordV1( $data );
-
-		return $this;
 	}
 
 	/**

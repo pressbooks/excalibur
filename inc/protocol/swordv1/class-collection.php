@@ -18,14 +18,14 @@ class Collection {
 	/**
 	 * The URL of the collection (where you can deposit to)
 	 *
-	 * @var string
+	 * @var \SimpleXMLElement|string
 	 */
 	public $href;
 
 	/**
 	 * The types of content accepted
 	 *
-	 * @var array
+	 * @var \SimpleXMLElement|string
 	 */
 	public $accept;
 

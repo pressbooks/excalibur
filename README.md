@@ -23,6 +23,13 @@ for more info.
 
     composer require pressbooks/excalibur
     
+Optional config:
+    
+    putenv( 'PB_SWORD_USER=dspace' );
+    putenv( 'PB_SWORD_PASSWORD=dspace' );
+    putenv( 'PB_SWORD_URL=https://demo.dspace.org/sword/servicedocument' );
+    putenv( 'PB_SWORD_DEBUG=1' ); 
+    
 ## Testing and coding standards ##
 
     composer install

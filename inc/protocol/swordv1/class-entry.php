@@ -186,7 +186,7 @@ class Entry {
 	 * @param \SimpleXMLElement $sac_dr
 	 * @param array $sac_ns
 	 */
-	function buildHierarchy( $sac_dr, $sac_ns ) {
+	public function buildHierarchy( $sac_dr, $sac_ns ) {
 		// Set the default namespace
 		$sac_dr->registerXPathNamespace( 'atom', 'http://www.w3.org/2005/Atom' );
 
@@ -236,4 +236,12 @@ class Entry {
 		}
 	}
 
+	/**
+	 * Print debug info to screen
+	 */
+	public function debug() {
+		echo '<pre>';
+		echo htmlentities( print_r( (array) $this, true ) );
+		echo '</pre>';
+	}
 }
