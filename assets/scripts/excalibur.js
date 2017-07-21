@@ -8,6 +8,6 @@ jQuery(function ($) {
         $(this).before('<div class="row"><input type="text" name="pb_contributing_authors[]" value="" class="contributing-author regular-text" /> <button class="button button-small delete-row">Delete Row</button></div>')
     });
     $('#pb_publication_date').datepicker({
-        dateFormat: 'mm/dd/yy',
+        dateFormat: 'yy-mm-dd',
     });
 });

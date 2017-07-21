@@ -98,7 +98,7 @@ class Admin extends \Excalibur\Admin {
 				$this->displayTextInput( 'pb_publisher', getset( $metadata, 'pb_publisher', '' ), __( 'Publisher', 'pressbooks-excalibur' ), null, false );
 
 				// Date Available
-				$this->displayTextInput( 'pb_publication_date', ( isset( $metadata['pb_publication_date'] ) ) ? strftime( '%m/%d/%Y', $metadata['pb_publication_date'] ) : '', __( 'Publication Date', 'pressbooks-excalibur' ) );
+				$this->displayTextInput( 'pb_publication_date', ( isset( $metadata['pb_publication_date'] ) ) ? strftime( '%Y-%m-%d', $metadata['pb_publication_date'] ) : '', __( 'Publication Date', 'pressbooks-excalibur' ) );
 
 				// Abstract
 				$this->displayTextArea( 'pb_about_50', getset( $metadata, 'pb_about_50', '' ), __( 'Short Description', 'pressbooks-excalibur' ) );
