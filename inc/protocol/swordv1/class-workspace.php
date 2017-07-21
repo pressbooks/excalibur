@@ -77,4 +77,13 @@ class Workspace {
 			$this->collections[] = $sac_newcollection;
 		}
 	}
+
+	/**
+	 * Print debug info to screen
+	 */
+	public function debug() {
+		echo '<pre>';
+		echo htmlentities( print_r( (array) $this, true ) );
+		echo '</pre>';
+	}
 }

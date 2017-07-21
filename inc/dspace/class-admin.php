@@ -2,10 +2,9 @@
 
 namespace Excalibur\Dspace;
 
-use PressbooksMix\Assets;
 use function \Pressbooks\Utility\getset;
 
-class Admin {
+class Admin extends \Excalibur\Admin {
 
 	const SLUG = 'pb_dspace';
 
@@ -27,23 +26,8 @@ class Admin {
 		);
 	}
 
-	public function assets( $hook ) {
-
-		if ( $hook !== 'publish_page_' . self::SLUG ) {
-			return;
-		}
-
-		$assets = new Assets( 'excalibur', 'plugin' );
-		$assets->setSrcDirectory( 'assets' )->setDistDirectory( 'dist' );
-
-		wp_enqueue_style( 'excalibur/css', $assets->getPath( 'styles/excalibur.css' ), false, null );
-		wp_enqueue_style( 'excalibur/datepicker', PB_PLUGIN_URL . 'symbionts/custom-metadata/css/jquery-ui-smoothness.css', false, null );
-		wp_enqueue_script( 'excalibur/js', $assets->getPath( 'scripts/excalibur.js' ), [ 'jquery', 'jquery-ui-datepicker' ], null );
-	}
-
-
 	/**
-	 *
+	 * Build some sort of form that handle POSTS
 	 */
 	public function display() {
 
@@ -60,6 +44,7 @@ class Admin {
 		$meta = ( new \Pressbooks\Metadata() )->getMetaPost();
 
 		if ( ! empty( $_POST ) && current_user_can( 'edit_posts' ) && check_admin_referer( self::SLUG ) ) {
+			// Do something with $_POST data
 			global $blog_id;
 			$this->saveOptions( $_POST );
 			$this->updateMetadata( $meta, $_POST );
@@ -67,6 +52,16 @@ class Admin {
 			try {
 				$this->postData( $_POST );
 				echo '<div id="message" class="updated"><p>Success!</p></div>';
+			} catch ( \Exception $e ) {
+				printf( '<div id="message" class="error"><p>%s</p></div>', $e->getMessage() );
+			}
+		}
+
+		$deposit_urls = [];
+		if ( $this->hasConfig() ) {
+			// Get a list of Deposit URLS
+			try {
+				$deposit_urls = $this->depositUrls();
 			} catch ( \Exception $e ) {
 				printf( '<div id="message" class="error"><p>%s</p></div>', $e->getMessage() );
 			}
@@ -103,10 +98,10 @@ class Admin {
 				$this->displayTextInput( 'pb_publisher', getset( $metadata, 'pb_publisher', '' ), __( 'Publisher', 'pressbooks-excalibur' ), null, false );
 
 				// Date Available
-				$this->displayTextInput( 'pb_publication_date', ( isset( $metadata['pb_publication_date'] ) ) ? strftime( '%m/%d/%Y', $metadata['pb_publication_date'] ) : '', __( 'Date Available', 'pressbooks-excalibur' ) );
+				$this->displayTextInput( 'pb_publication_date', ( isset( $metadata['pb_publication_date'] ) ) ? strftime( '%m/%d/%Y', $metadata['pb_publication_date'] ) : '', __( 'Publication Date', 'pressbooks-excalibur' ) );
 
 				// Abstract
-				$this->displayTextArea( 'pb_about_50', getset( $metadata, 'pb_about_50', '' ), __( 'Abstract', 'pressbooks-excalibur' ) );
+				$this->displayTextArea( 'pb_about_50', getset( $metadata, 'pb_about_50', '' ), __( 'Short Description', 'pressbooks-excalibur' ) );
 
 				// Citation
 				$this->displayTextArea( 'sword_citation', getset( $options, 'sword_citation', '' ), __( 'Citation', 'pressbooks-excalibur' ) );
@@ -123,23 +118,42 @@ class Admin {
 				?>
 			</table>
 
-			<h2><?php _e( 'Submission Details', 'pressbooks-excalibur' ); ?></h2>
-			<p><?php _e( 'This information is required to complete your DSpace submission and will be saved in case you need to resubmit your book at a later date.', 'pressbooks-excalibur' ); ?>
-			<table class="form-table">
-				<?php
-				// $this->displayTextInput( 'sword_url', getset( $options, 'sword_url', 'https://books.spi.ryerson.ca/sword/servicedocument' ), __( 'Service Document URL*', 'pressbooks-excalibur' ), '', true );
-				$this->displayTextInput( 'sword_deposit_url', getset( $options, 'sword_deposit_url', 'https://books.spi.ryerson.ca/sword/deposit/123456789/8' ), __( 'Deposit URL*', 'pressbooks-excalibur' ), '', true );
-				$this->displayTextInput( 'sword_user', getset( $options, 'sword_user', '' ), __( 'Username*', 'pressbooks-excalibur' ), '', true );
-				$this->displayPasswordInput( 'sword_password', '', __( 'Password*', 'pressbooks-excalibur' ), '', true );
-				?>
-			</table>
-
+			<?php if ( ! $this->hasConfig() ) { ?>
+				<h2><?php _e( 'Submission Details', 'pressbooks-excalibur' ); ?></h2>
+				<p><?php _e( 'This information is required to complete your DSpace submission and will be saved in case you need to resubmit your book at a later date.', 'pressbooks-excalibur' ); ?>
+				<table class="form-table">
+					<?php
+					$this->displayTextInput( 'sword_deposit_url', getset( $options, 'sword_deposit_url', '' ), __( 'Deposit URL*', 'pressbooks-excalibur' ), '', true );
+					$this->displayTextInput( 'sword_user', getset( $options, 'sword_user', '' ), __( 'Username*', 'pressbooks-excalibur' ), '', true );
+					$this->displayPasswordInput( 'sword_password', '', __( 'Password*', 'pressbooks-excalibur' ), '', true );
+					?>
+				</table>
+			<?php } elseif ( ! empty( $deposit_urls ) ) { ?>
+				<table class="form-table">
+					<?php
+					$this->displaySelect( 'sword_deposit_url', $deposit_urls, getset( $options, 'sword_deposit_url', '' ), __( 'Deposit URL*', 'pressbooks-excalibur' ), '', true );
+					?>
+				</table>
+			<?php } else { ?>
+				<p><em><?php _e( "Configuration problem: You don't have access to any Dspace collections? Contact your system administrator.", 'pressbooks-excalibur' ) ?></em></p>
+			<?php } ?>
 			<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e( 'Submit to DSpace', 'pressbooks-excalibur' ); ?>">
 			</p>
 		</form>
 		<pre></pre>
 		<?php
 		echo '</div>';
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function hasConfig() {
+		if ( getenv( 'PB_SWORD_USER' ) && getenv( 'PB_SWORD_PASSWORD' ) && getenv( 'PB_SWORD_URL' ) ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -156,153 +170,6 @@ class Admin {
 		}
 		return false;
 	}
-
-	/**
-	 * @param string $name
-	 * @param string $value
-	 * @param string $label
-	 * @param string $description (optional)
-	 * @param bool $required (optional)
-	 * @param string $class (optional)
-	 */
-	public function displayTextInput( $name, $value, $label, $description = '', $required = false, $class = 'regular-text' ) {
-		printf(
-			'<tr><th scope="row"><label for="%s">%s</label></th><td><input type="text" name="%s" id="%s" value="%s" class="%s"%s aria-required="%s" />%s</td></tr>',
-			$name,
-			$label,
-			$name,
-			$name,
-			$value,
-			$class,
-			( $required ) ? ' required' : '',
-			$required,
-			( $description ) ? sprintf( '<p class="description">%s</p>', $description ) : ''
-		);
-	}
-
-	/**
-	 * @param string $name
-	 * @param string $value
-	 * @param string $label
-	 * @param string $description (optional)
-	 * @param bool $required (optional)
-	 * @param string $class (optional)
-	 */
-	public function displayPasswordInput( $name, $value, $label, $description = '', $required = false, $class = 'regular-text' ) {
-		printf(
-			'<tr><th scope="row"><label for="%s">%s</label></th><td><input type="password" name="%s" id="%s" value="%s" class="%s"%s aria-required="%s" />%s</td></tr>',
-			$name,
-			$label,
-			$name,
-			$name,
-			$value,
-			$class,
-			( $required ) ? ' required' : '',
-			$required,
-			( $description ) ? sprintf( '<p class="description">%s</p>', $description ) : ''
-		);
-	}
-
-	/**
-	 * @param string $name
-	 * @param string $value
-	 * @param string $label
-	 * @param string $description (optional)
-	 * @param string $class (optional)
-	 */
-	public function displayTextInputRows( $name, $value, $label, $description = '', $class = 'regular-text' ) {
-		$rows = '';
-
-		if ( $value ) {
-			$values = explode( ', ', $value );
-			$i = 0;
-			foreach ( $values as $row ) {
-				$rows .= sprintf(
-					'<div class="row"><input type="text" name="%s[ ]" value="%s" class="%s" />%s</div>',
-					$name,
-					$row,
-					$class,
-					( $i > 0 ) ? sprintf( ' <button class="button button-small delete-row">%s</button>', __( 'Delete Row', 'pressbooks-excalibur' ) ) : ''
-				);
-				$i++;
-			}
-		} else {
-			$rows = sprintf(
-				'<div class="row"><input type="text" name="%s[ ]" value="" class="%s" /></div>',
-				$name,
-				$class,
-				__( 'Delete Row', 'pressbooks-excalibur' )
-			);
-		}
-
-		printf(
-			'<tr><th scope="row"><label for="%s">%s</label></th><td id="%s">%s<button class="button add-row">%s</button>%s</td></tr>',
-			$name,
-			$label,
-			$name,
-			$rows,
-			__( 'Add Row', 'pressbooks-excalibur' ),
-			( $description ) ? sprintf( '<p class="description">%s</p>', $description ) : ''
-		);
-	}
-
-	/**
-	 * @param string $name
-	 * @param string $value
-	 * @param string $label
-	 * @param string $description (optional)
-	 * @param bool $required (optional)
-	 */
-	public function displayTextArea( $name, $value, $label, $description = '', $required = false ) {
-		printf(
-			'<tr><th scope="row"><label for="%s">%s</label></th><td><textarea name="%s" id="%s" rows="5" cols="30"%s aria-required="%s" />%s</textarea>%s</td></tr>',
-			$name,
-			$label,
-			$name,
-			$name,
-			( $required ) ? ' required' : '',
-			$required,
-			$value,
-			( $description ) ? sprintf( '<p class="description">%s</p>', $description ) : ''
-		);
-	}
-
-	/**
-	 * @param string $name
-	 * @param array $options
-	 * @param array|string $values
-	 * @param string $label
-	 * @param string $description (optional)
-	 * @param bool $required (optional)
-	 * @param bool $multiple (optional)
-	 * @param bool $disabled (optional)
-	 */
-	public function displaySelect( $name, $options, $values, $label, $description = '', $required = false, $multiple = false, $disabled = false ) {
-		$choices = '';
-
-		foreach ( $options as $key => $value ) {
-			if ( $multiple ) {
-				$choices .= sprintf( '<option value="%s" %s>%s</option>', $key, ( in_array( $key, $values, true ) ) ? 'selected' : '', $value );
-			} else {
-				$choices .= sprintf( '<option value="%s" %s>%s</option>', $key, selected( $values, $key, false ), $value );
-			}
-		}
-		printf(
-			'<tr><th scope="row"><label for="%s">%s</label></th><td><select name="%s%s" id="%s"%s%s%s aria-required="%s">%s</select>%s</td></tr>',
-			$name,
-			$label,
-			$name,
-			( $multiple ) ? '[ ]' : '',
-			$name,
-			( $multiple ) ? ' multiple' : '',
-			( $disabled ) ? ' disabled' : '',
-			( $required ) ? ' required' : '',
-			$required,
-			$choices,
-			( $description ) ? sprintf( '<p class="description">%s</p>', $description ) : ''
-		);
-	}
-
 
 	/**
 	 * @param \WP_Post $meta meta post
@@ -389,13 +256,38 @@ class Admin {
 	 */
 	protected function postData( $data ) {
 
-		$deposit = new Deposit(
-			getset( $data, 'sword_url' ),
-			getset( $data, 'sword_deposit_url' ),
-			getset( $data, 'sword_user' ),
-			getset( $data, 'sword_password' )
-		);
+		if ( $this->hasConfig() ) {
+			$deposit = new Deposit(
+				getenv( 'PB_SWORD_URL' ),
+				getset( $data, 'sword_deposit_url' ),
+				getenv( 'PB_SWORD_USER' ),
+				getenv( 'PB_SWORD_PASSWORD' )
+			);
+		} else {
+			$deposit = new Deposit(
+				null,
+				getset( $data, 'sword_deposit_url' ),
+				getset( $data, 'sword_user' ),
+				getset( $data, 'sword_password' )
+			);
+		}
 
 		$deposit->buildAndSendPackage( $data );
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function depositUrls() {
+
+		// Get deposit URLS
+		$deposit = new Deposit(
+			getenv( 'PB_SWORD_URL' ),
+			null,
+			getenv( 'PB_SWORD_USER' ),
+			getenv( 'PB_SWORD_PASSWORD' )
+		);
+
+		return $deposit->queryForDepositUrls();
 	}
 }
