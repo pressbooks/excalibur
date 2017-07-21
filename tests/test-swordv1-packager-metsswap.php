@@ -1,6 +1,6 @@
 <?php
 
-class SwordV1PackagerMetsSwapTest extends WP_UnitTestCase {
+class SwordV1PackagerMetsSwapTest extends \WP_UnitTestCase {
 
 	function test_packaging() {
 
@@ -64,3 +64,4 @@ class SwordV1PackagerMetsSwapTest extends WP_UnitTestCase {
 		return untrailingslashit( $temp_file );
 	}
 }
+

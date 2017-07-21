@@ -1,6 +1,6 @@
 <?php
 
-class DspaceAdminTest extends WP_UnitTestCase {
+class DspaceAdminTest extends \WP_UnitTestCase {
 
 
 	function test_formHelpers() {
