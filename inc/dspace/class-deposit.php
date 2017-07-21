@@ -94,7 +94,7 @@ class Deposit {
 		foreach ( $sd->workspaces as $workspace ) {
 			foreach ( $workspace->collections as $collection ) {
 				foreach ( $collection->acceptPackaging as $package_type => $package_version ) {
-					if ( $package_type === 'http://purl.org/net/sword-types/METSDSpaceSIP') {
+					if ( $package_type === 'http://purl.org/net/sword-types/METSDSpaceSIP' ) {
 						$deposit_urls[ (string) $collection->href ] = $collection->collTitle;
 					}
 				}
@@ -174,6 +174,8 @@ class Deposit {
 		// Language - two letter code
 		$package->setLanguage( getset( $data, 'pb_language' ) );
 
+		/* @codingStandardsIgnoreStart */
+
 		// TODO: Initial testing of the following items didn't show up in DSpace?
 
 		// Publisher
@@ -187,6 +189,8 @@ class Deposit {
 
 		// Information about rights held in and over the resource.
 		// $package->addRights( '' );
+
+		/* @codingStandardsIgnoreEnd */
 
 		// Create file -----------------------------------------------------------------------------
 

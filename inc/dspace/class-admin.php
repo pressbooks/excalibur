@@ -80,36 +80,36 @@ class Admin extends \Excalibur\Admin {
 		<form id="dspace-form" action="<?php echo $form_url; ?>" method="POST">
 			<table class="form-table">
 				<?php
-				// Identifier: Pressbooks book? ISBN?
+				// SWORD: Identifier:
 				$this->displayTextInput( 'sword_identifier', getset( $options, 'sword_identifier', get_site_url() ), __( 'Identifier*', 'pressbooks-excalibur' ), '', true );
 
-				// Title
+				// SWORD: Title
 				$this->displayTextInput( 'pb_title', $metadata['pb_title'], __( 'Title*', 'pressbooks-excalibur' ), '', true );
 
-				// Custodian
+				// SWORD:  Custodian
 				$this->displayTextInput( 'pb_author', getset( $metadata, 'pb_author', '' ), __( 'Author*', 'pressbooks-excalibur' ), '', true );
 
-				// Creators
+				// SWORD: Creators
 				$this->displayTextInputRows( 'pb_contributing_authors', getset( $metadata, 'pb_contributing_authors', '' ), __( 'Contributing Author(s)', 'pressbooks-excalibur' ), '', 'regular-text contributing-author' );
 
-				// Copyright Holder
+				// SWORD: Copyright Holder
 				$this->displayTextInput( 'pb_copyright_holder', getset( $metadata, 'pb_copyright_holder', '' ), __( 'Copyright Holder', 'pressbooks-excalibur' ) );
 
 				$this->displayTextInput( 'pb_publisher', getset( $metadata, 'pb_publisher', '' ), __( 'Publisher', 'pressbooks-excalibur' ), null, false );
 
-				// Date Available
+				// SWORD: Date Available
 				$this->displayTextInput( 'pb_publication_date', ( isset( $metadata['pb_publication_date'] ) ) ? strftime( '%Y-%m-%d', $metadata['pb_publication_date'] ) : '', __( 'Publication Date', 'pressbooks-excalibur' ) );
 
-				// Abstract
+				// SWORD: Abstract
 				$this->displayTextArea( 'pb_about_50', getset( $metadata, 'pb_about_50', '' ), __( 'Short Description', 'pressbooks-excalibur' ) );
 
-				// Citation
+				// SWORD: Citation
 				$this->displayTextArea( 'sword_citation', getset( $options, 'sword_citation', '' ), __( 'Citation', 'pressbooks-excalibur' ) );
 
-				// Language
+				// SWORD: Language
 				$this->displaySelect( 'pb_language', \Pressbooks\L10n\supported_languages(), ( isset( $metadata['pb_language'] ) ) ? $metadata['pb_language'] : 'en', __( 'Language*', 'pressbooks-excalibur' ), '', true );
 
-				// Status Statement / Peer Reviewed
+				// SWORD: Status Statement
 				$status_statements = [
 					'http://purl.org/eprint/status/PeerReviewed' => 'Peer reviewed',
 					'http://purl.org/eprint/status/NonPeerReviewed' => 'Non-peer reviewed',
@@ -189,7 +189,7 @@ class Admin extends \Excalibur\Admin {
 				// Strings in date format
 				$this->updateString( $meta->ID, $key, strtotime( $value ) );
 			} elseif ( in_array( $key, [ 'pb_contributing_authors' ], true ) ) {
-				// Array
+				// Sanitize an array of string then update it
 				$this->updateArray( $meta->ID, $key, $value );
 			} elseif ( in_array( $key, [ 'pb_language' ], true ) ) {
 				// Select
