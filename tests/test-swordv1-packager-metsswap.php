@@ -1,10 +1,7 @@
 <?php
 
-class MetsSwapPackagerTest extends WP_UnitTestCase {
+class SwordV1PackagerMetsSwapTest extends WP_UnitTestCase {
 
-	/**
-	 * A single example test.
-	 */
 	function test_packaging() {
 
 		$tmp_dir = $this->createTmpDir();

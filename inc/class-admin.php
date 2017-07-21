@@ -91,7 +91,7 @@ abstract class Admin {
 			$i = 0;
 			foreach ( $values as $row ) {
 				$rows .= sprintf(
-					'<div class="row"><input type="text" name="%s[ ]" value="%s" class="%s" />%s</div>',
+					'<div class="row"><input type="text" name="%s[]" value="%s" class="%s" />%s</div>',
 					$name,
 					$row,
 					$class,
@@ -101,7 +101,7 @@ abstract class Admin {
 			}
 		} else {
 			$rows = sprintf(
-				'<div class="row"><input type="text" name="%s[ ]" value="" class="%s" /></div>',
+				'<div class="row"><input type="text" name="%s[]" value="" class="%s" /></div>',
 				$name,
 				$class,
 				__( 'Delete Row', 'pressbooks-excalibur' )
@@ -155,7 +155,7 @@ abstract class Admin {
 
 		foreach ( $options as $key => $value ) {
 			if ( $multiple ) {
-				$choices .= sprintf( '<option value="%s" %s>%s</option>', $key, ( in_array( $key, $values, true ) ) ? 'selected' : '', $value );
+				$choices .= sprintf( '<option value="%s" %s>%s</option>', $key, ( in_array( $key, $values, true ) ) ? "selected='selected'" : '', $value );
 			} else {
 				$choices .= sprintf( '<option value="%s" %s>%s</option>', $key, selected( $values, $key, false ), $value );
 			}
@@ -165,7 +165,7 @@ abstract class Admin {
 			$name,
 			$label,
 			$name,
-			( $multiple ) ? '[ ]' : '',
+			( $multiple ) ? '[]' : '',
 			$name,
 			( $multiple ) ? ' multiple' : '',
 			( $disabled ) ? ' disabled' : '',
