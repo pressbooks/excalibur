@@ -2,6 +2,7 @@
 
 namespace Excalibur\Dspace;
 
+use function \Pressbooks\Image\is_default_cover;
 use function \Pressbooks\Utility\getset;
 
 class Deposit {
@@ -105,7 +106,7 @@ class Deposit {
 	}
 
 	/**
-	 * @param array $data form data
+	 * @param array $data form-data
 	 *
 	 * @throws \Exception
 	 */
@@ -114,7 +115,8 @@ class Deposit {
 	}
 
 	/**
-	 * @param array $data form data
+	 * @param array $data form-data
+	 *
 	 * @throws \Exception
 	 */
 	protected function swordV1( $data ) {
@@ -131,6 +133,16 @@ class Deposit {
 				$file = untrailingslashit( $exports_dir ) . '/' . $exports[ $format ];
 				$package->addFile( $file, $this->mimeType( $file ) );
 			}
+		}
+
+		// Add cover ------------------------------------------------------------------------------
+
+		$metadata = \Pressbooks\Book::getBookInformation();
+		if ( ! empty( $metadata['pb_cover_image'] ) && ! is_default_cover( $metadata['pb_cover_image'] ) ) {
+			$source_path = \Pressbooks\Utility\get_media_path( $metadata['pb_cover_image'] );
+			$dest_path = $this->tmpDir . '/cover.' . pathinfo( $source_path, PATHINFO_EXTENSION ); // Rename image to cover.ext
+			copy( $source_path, $dest_path );
+			$package->addFile( $dest_path, $this->mimeType( $dest_path ) );
 		}
 
 		// Add meta --------------------------------------------------------------------------------
