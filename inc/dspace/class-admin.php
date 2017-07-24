@@ -41,16 +41,16 @@ class Admin extends \Excalibur\Admin {
 			return;
 		}
 
-		$meta = ( new \Pressbooks\Metadata() )->getMetaPost();
+		$metapost = ( new \Pressbooks\Metadata() )->getMetaPost();
 
 		if ( ! empty( $_POST ) && current_user_can( 'edit_posts' ) && check_admin_referer( self::SLUG ) ) {
 			// Do something with $_POST data
 			global $blog_id;
 			$this->saveOptions( $_POST );
-			$this->updateMetadata( $meta, $_POST );
+			$this->updateMetadata( $metapost->ID, $_POST );
 			wp_cache_delete( "book-inf-{$blog_id}", 'pb' );
 			try {
-				$this->postData( $_POST );
+				$this->post( $_POST );
 				echo '<div id="message" class="updated"><p>Success!</p></div>';
 			} catch ( \Exception $e ) {
 				printf( '<div id="message" class="error"><p>%s</p></div>', $e->getMessage() );
@@ -68,8 +68,8 @@ class Admin extends \Excalibur\Admin {
 		}
 
 		$form_url = wp_nonce_url( get_admin_url( get_current_blog_id(), '/admin.php?page=' . self::SLUG ), self::SLUG );
-		$book_info_url = admin_url( 'post.php?post=' . absint( $meta->ID ) . '&action=edit' );
-		$metadata = \Pressbooks\Book::getBookInformation();
+		$book_info_url = admin_url( 'post.php?post=' . absint( $metapost->ID ) . '&action=edit' );
+		$metadata = \Pressbooks\Book::getBookInformation(); // Get latest metadata
 		$options = get_option( self::OPTION, [] );
 
 		?>
@@ -172,10 +172,12 @@ class Admin extends \Excalibur\Admin {
 	}
 
 	/**
-	 * @param \WP_Post $meta meta post
-	 * @param array $data form data
+	 * Update back mapped Pressbooks metadata
+	 *
+	 * @param int $id meta post id
+	 * @param array $data form-data
 	 */
-	protected function updateMetadata( $meta, $data ) {
+	protected function updateMetadata( $id, $data ) {
 		foreach ( $data as $key => $value ) {
 			if ( strpos( $key, 'pb_' ) !== 0 ) {
 				continue;
@@ -184,22 +186,24 @@ class Admin extends \Excalibur\Admin {
 			// Save Back into Pressbooks metadata
 			if ( in_array( $key, [ 'pb_title', 'pb_subtitle', 'pb_author', 'pb_publisher', 'pb_about_50', 'pb_copyright_holder' ], true ) ) {
 				// Strings
-				$this->updateString( $meta->ID, $key, $value );
+				$this->updateString( $id, $key, $value );
 			} elseif ( in_array( $key, [ 'pb_publication_date' ], true ) ) {
 				// Strings in date format
-				$this->updateString( $meta->ID, $key, strtotime( $value ) );
+				$this->updateString( $id, $key, strtotime( $value ) );
 			} elseif ( in_array( $key, [ 'pb_contributing_authors' ], true ) ) {
 				// Sanitize an array of string then update it
-				$this->updateArray( $meta->ID, $key, $value );
+				$this->updateArray( $id, $key, $value );
 			} elseif ( in_array( $key, [ 'pb_language' ], true ) ) {
 				// Select
-				$this->updateSelect( $meta->ID, $key, $value );
+				$this->updateSelect( $id, $key, $value );
 			}
 		}
 	}
 
 	/**
-	 * @param array $data form data
+	 * Save DSpace specific options, not back mapped Pressbooks metadata
+	 *
+	 * @param array $data form-data
 	 */
 	protected function saveOptions( $data ) {
 		$option = [];
@@ -252,9 +256,9 @@ class Admin extends \Excalibur\Admin {
 	}
 
 	/**
-	 * @param array $data form data
+	 * @param array $data form-data
 	 */
-	protected function postData( $data ) {
+	protected function post( $data ) {
 
 		if ( $this->hasConfig() ) {
 			$deposit = new Deposit(
