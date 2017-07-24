@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Excalibur 0.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/excalibur\n"
-"POT-Creation-Date: 2017-07-11 02:22:14+00:00\n"
+"POT-Creation-Date: 2017-07-24 18:32:52+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,6 +23,118 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
+
+#: excalibur.php:21
+msgid "Cannot find Pressbooks install."
+msgstr ""
+
+#: inc/class-admin.php:98 inc/class-admin.php:107
+msgid "Delete Row"
+msgstr ""
+
+#: inc/class-admin.php:117
+msgid "Add Row"
+msgstr ""
+
+#: inc/dspace/class-admin.php:21 inc/dspace/class-admin.php:22
+#: inc/dspace/class-admin.php:76 inc/dspace/class-admin.php:140
+msgid "Submit to DSpace"
+msgstr ""
+
+#: inc/dspace/class-admin.php:39
+msgid ""
+"No export files were found. Please export your book as EPUB, MOBI and/or "
+"PDF and return to this page to complete your submission."
+msgstr ""
+
+#: inc/dspace/class-admin.php:77
+msgid ""
+"Pressbooks can submit your EPUB or PDF to a <a "
+"href=\"http://www.dspace.org/\">DSpace</a> repository. Please complete the "
+"information below before submitting."
+msgstr ""
+
+#: inc/dspace/class-admin.php:78
+msgid "Book Information"
+msgstr ""
+
+#: inc/dspace/class-admin.php:79
+msgid ""
+"This information comes from your book&rsquo;s <a href=\"%s\">Book "
+"Information</a> page. Any changes made here will be saved there as well."
+msgstr ""
+
+#: inc/dspace/class-admin.php:84
+msgid "Identifier*"
+msgstr ""
+
+#: inc/dspace/class-admin.php:87
+msgid "Title*"
+msgstr ""
+
+#: inc/dspace/class-admin.php:90
+msgid "Author*"
+msgstr ""
+
+#: inc/dspace/class-admin.php:93
+msgid "Contributing Author(s)"
+msgstr ""
+
+#: inc/dspace/class-admin.php:96
+msgid "Copyright Holder"
+msgstr ""
+
+#: inc/dspace/class-admin.php:98
+msgid "Publisher"
+msgstr ""
+
+#: inc/dspace/class-admin.php:101
+msgid "Publication Date"
+msgstr ""
+
+#: inc/dspace/class-admin.php:104
+msgid "Short Description"
+msgstr ""
+
+#: inc/dspace/class-admin.php:107
+msgid "Citation"
+msgstr ""
+
+#: inc/dspace/class-admin.php:110
+msgid "Language*"
+msgstr ""
+
+#: inc/dspace/class-admin.php:117
+msgid "Status Statement*"
+msgstr ""
+
+#: inc/dspace/class-admin.php:122
+msgid "Submission Details"
+msgstr ""
+
+#: inc/dspace/class-admin.php:123
+msgid ""
+"This information is required to complete your DSpace submission and will be "
+"saved in case you need to resubmit your book at a later date."
+msgstr ""
+
+#: inc/dspace/class-admin.php:126 inc/dspace/class-admin.php:134
+msgid "Deposit URL*"
+msgstr ""
+
+#: inc/dspace/class-admin.php:127
+msgid "Username*"
+msgstr ""
+
+#: inc/dspace/class-admin.php:128
+msgid "Password*"
+msgstr ""
+
+#: inc/dspace/class-admin.php:138
+msgid ""
+"Configuration problem: You don't have access to any Dspace collections? "
+"Contact your system administrator."
+msgstr ""
 
 #. Plugin Name of the plugin/theme
 msgid "Excalibur"

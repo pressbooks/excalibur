@@ -95,7 +95,7 @@ abstract class Admin {
 					$name,
 					$row,
 					$class,
-					( $i > 0 ) ? sprintf( ' <button class="button button-small delete-row">%s</button>', __( 'Delete Row', 'pressbooks-excalibur' ) ) : ''
+					( $i > 0 ) ? sprintf( ' <button class="button button-small delete-row">%s</button>', __( 'Delete Row', 'excalibur' ) ) : ''
 				);
 				$i++;
 			}
@@ -104,7 +104,7 @@ abstract class Admin {
 				'<div class="row"><input type="text" name="%s[]" value="" class="%s" /></div>',
 				$name,
 				$class,
-				__( 'Delete Row', 'pressbooks-excalibur' )
+				__( 'Delete Row', 'excalibur' )
 			);
 		}
 
@@ -114,7 +114,7 @@ abstract class Admin {
 			$label,
 			$name,
 			$rows,
-			__( 'Add Row', 'pressbooks-excalibur' ),
+			__( 'Add Row', 'excalibur' ),
 			( $description ) ? sprintf( '<p class="description">%s</p>', $description ) : ''
 		);
 	}

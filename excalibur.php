@@ -7,9 +7,12 @@
  * Author URI:      https://github.com/pressbooks
  * Text Domain:     excalibur
  * Domain Path:     /languages
- * Version:         0.1.0
+ * GitHub Plugin URI: https://github.com/pressbooks/excalibur
+ * Release Asset: true
+ * Network: True
+ * Version: 0.1.0
  *
- * @package         Excalibur
+ * @package Excalibur
  */
 
 // -------------------------------------------------------------------------------------------------------------------
@@ -18,7 +21,7 @@
 
 if ( ! function_exists( 'pb_meets_minimum_requirements' ) && ! @include_once( WP_PLUGIN_DIR . '/pressbooks/compatibility.php' ) ) { // @codingStandardsIgnoreLine
 	add_action('admin_notices', function () {
-		echo '<div id="message" class="error fade"><p>' . __( 'Cannot find Pressbooks install.', 'pressbooks-oauth' ) . '</p></div>';
+		echo '<div id="message" class="error fade"><p>' . __( 'Cannot find Pressbooks install.', 'excalibur' ) . '</p></div>';
 	});
 	return;
 } elseif ( ! pb_meets_minimum_requirements() ) {

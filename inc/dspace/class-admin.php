@@ -18,8 +18,8 @@ class Admin extends \Excalibur\Admin {
 	public function add() {
 		$hook = add_submenu_page(
 			'pb_publish',
-			__( 'Submit to DSpace', 'pressbooks-excalibur' ),
-			__( 'Submit to DSpace', 'pressbooks-excalibur' ),
+			__( 'Submit to DSpace', 'excalibur' ),
+			__( 'Submit to DSpace', 'excalibur' ),
 			'manage_options',
 			self::SLUG,
 			[ $this, 'display' ]
@@ -36,7 +36,7 @@ class Admin extends \Excalibur\Admin {
 		if ( ! $this->hasExports() ) {
 			printf(
 				'<div id="message" class="error"><p>%s</p></div></div>',
-				__( 'No export files were found. Please export your book as EPUB, MOBI and/or PDF and return to this page to complete your submission.', 'pressbooks-excalibur' )
+				__( 'No export files were found. Please export your book as EPUB, MOBI and/or PDF and return to this page to complete your submission.', 'excalibur' )
 			);
 			return;
 		}
@@ -73,71 +73,71 @@ class Admin extends \Excalibur\Admin {
 		$options = get_option( self::OPTION, [] );
 
 		?>
-		<h1><?php _e( 'Submit to DSpace', 'pressbooks-excalibur' ); ?></h1>
-		<p><?php _e( 'Pressbooks can submit your EPUB or PDF to a <a href="http://www.dspace.org/">DSpace</a> repository. Please complete the information below before submitting.', 'pressbooks-excalibur' ); ?></p>
-		<h2><?php _e( 'Book Information', 'pressbooks-excalibur' ); ?></h2>
-		<p><?php printf( __( 'This information comes from your book&rsquo;s <a href="%s">Book Information</a> page. Any changes made here will be saved there as well.', 'pressbooks-excalibur' ), $book_info_url ); ?></p>
+		<h1><?php _e( 'Submit to DSpace', 'excalibur' ); ?></h1>
+		<p><?php _e( 'Pressbooks can submit your EPUB or PDF to a <a href="http://www.dspace.org/">DSpace</a> repository. Please complete the information below before submitting.', 'excalibur' ); ?></p>
+		<h2><?php _e( 'Book Information', 'excalibur' ); ?></h2>
+		<p><?php printf( __( 'This information comes from your book&rsquo;s <a href="%s">Book Information</a> page. Any changes made here will be saved there as well.', 'excalibur' ), $book_info_url ); ?></p>
 		<form id="dspace-form" action="<?php echo $form_url; ?>" method="POST">
 			<table class="form-table">
 				<?php
 				// SWORD: Identifier:
-				$this->displayTextInput( 'sword_identifier', getset( $options, 'sword_identifier', get_site_url() ), __( 'Identifier*', 'pressbooks-excalibur' ), '', true );
+				$this->displayTextInput( 'sword_identifier', getset( $options, 'sword_identifier', get_site_url() ), __( 'Identifier*', 'excalibur' ), '', true );
 
 				// SWORD: Title
-				$this->displayTextInput( 'pb_title', $metadata['pb_title'], __( 'Title*', 'pressbooks-excalibur' ), '', true );
+				$this->displayTextInput( 'pb_title', $metadata['pb_title'], __( 'Title*', 'excalibur' ), '', true );
 
 				// SWORD:  Custodian
-				$this->displayTextInput( 'pb_author', getset( $metadata, 'pb_author', '' ), __( 'Author*', 'pressbooks-excalibur' ), '', true );
+				$this->displayTextInput( 'pb_author', getset( $metadata, 'pb_author', '' ), __( 'Author*', 'excalibur' ), '', true );
 
 				// SWORD: Creators
-				$this->displayTextInputRows( 'pb_contributing_authors', getset( $metadata, 'pb_contributing_authors', '' ), __( 'Contributing Author(s)', 'pressbooks-excalibur' ), '', 'regular-text contributing-author' );
+				$this->displayTextInputRows( 'pb_contributing_authors', getset( $metadata, 'pb_contributing_authors', '' ), __( 'Contributing Author(s)', 'excalibur' ), '', 'regular-text contributing-author' );
 
 				// SWORD: Copyright Holder
-				$this->displayTextInput( 'pb_copyright_holder', getset( $metadata, 'pb_copyright_holder', '' ), __( 'Copyright Holder', 'pressbooks-excalibur' ) );
+				$this->displayTextInput( 'pb_copyright_holder', getset( $metadata, 'pb_copyright_holder', '' ), __( 'Copyright Holder', 'excalibur' ) );
 
-				$this->displayTextInput( 'pb_publisher', getset( $metadata, 'pb_publisher', '' ), __( 'Publisher', 'pressbooks-excalibur' ), null, false );
+				$this->displayTextInput( 'pb_publisher', getset( $metadata, 'pb_publisher', '' ), __( 'Publisher', 'excalibur' ), null, false );
 
 				// SWORD: Date Available
-				$this->displayTextInput( 'pb_publication_date', ( isset( $metadata['pb_publication_date'] ) ) ? strftime( '%Y-%m-%d', $metadata['pb_publication_date'] ) : '', __( 'Publication Date', 'pressbooks-excalibur' ) );
+				$this->displayTextInput( 'pb_publication_date', ( isset( $metadata['pb_publication_date'] ) ) ? strftime( '%Y-%m-%d', $metadata['pb_publication_date'] ) : '', __( 'Publication Date', 'excalibur' ) );
 
 				// SWORD: Abstract
-				$this->displayTextArea( 'pb_about_50', getset( $metadata, 'pb_about_50', '' ), __( 'Short Description', 'pressbooks-excalibur' ) );
+				$this->displayTextArea( 'pb_about_50', getset( $metadata, 'pb_about_50', '' ), __( 'Short Description', 'excalibur' ) );
 
 				// SWORD: Citation
-				$this->displayTextArea( 'sword_citation', getset( $options, 'sword_citation', '' ), __( 'Citation', 'pressbooks-excalibur' ) );
+				$this->displayTextArea( 'sword_citation', getset( $options, 'sword_citation', '' ), __( 'Citation', 'excalibur' ) );
 
 				// SWORD: Language
-				$this->displaySelect( 'pb_language', \Pressbooks\L10n\supported_languages(), ( isset( $metadata['pb_language'] ) ) ? $metadata['pb_language'] : 'en', __( 'Language*', 'pressbooks-excalibur' ), '', true );
+				$this->displaySelect( 'pb_language', \Pressbooks\L10n\supported_languages(), ( isset( $metadata['pb_language'] ) ) ? $metadata['pb_language'] : 'en', __( 'Language*', 'excalibur' ), '', true );
 
 				// SWORD: Status Statement
 				$status_statements = [
 					'http://purl.org/eprint/status/PeerReviewed' => 'Peer reviewed',
 					'http://purl.org/eprint/status/NonPeerReviewed' => 'Non-peer reviewed',
 				];
-				$this->displaySelect( 'sword_status_statement', $status_statements, getset( $options, 'sword_status_statement', '' ), __( 'Status Statement*', 'pressbooks-excalibur' ), '', true, false );
+				$this->displaySelect( 'sword_status_statement', $status_statements, getset( $options, 'sword_status_statement', '' ), __( 'Status Statement*', 'excalibur' ), '', true, false );
 				?>
 			</table>
 
 			<?php if ( ! $this->hasConfig() ) { ?>
-				<h2><?php _e( 'Submission Details', 'pressbooks-excalibur' ); ?></h2>
-				<p><?php _e( 'This information is required to complete your DSpace submission and will be saved in case you need to resubmit your book at a later date.', 'pressbooks-excalibur' ); ?>
+				<h2><?php _e( 'Submission Details', 'excalibur' ); ?></h2>
+				<p><?php _e( 'This information is required to complete your DSpace submission and will be saved in case you need to resubmit your book at a later date.', 'excalibur' ); ?>
 				<table class="form-table">
 					<?php
-					$this->displayTextInput( 'sword_deposit_url', getset( $options, 'sword_deposit_url', '' ), __( 'Deposit URL*', 'pressbooks-excalibur' ), '', true );
-					$this->displayTextInput( 'sword_user', getset( $options, 'sword_user', '' ), __( 'Username*', 'pressbooks-excalibur' ), '', true );
-					$this->displayPasswordInput( 'sword_password', '', __( 'Password*', 'pressbooks-excalibur' ), '', true );
+					$this->displayTextInput( 'sword_deposit_url', getset( $options, 'sword_deposit_url', '' ), __( 'Deposit URL*', 'excalibur' ), '', true );
+					$this->displayTextInput( 'sword_user', getset( $options, 'sword_user', '' ), __( 'Username*', 'excalibur' ), '', true );
+					$this->displayPasswordInput( 'sword_password', '', __( 'Password*', 'excalibur' ), '', true );
 					?>
 				</table>
 			<?php } elseif ( ! empty( $deposit_urls ) ) { ?>
 				<table class="form-table">
 					<?php
-					$this->displaySelect( 'sword_deposit_url', $deposit_urls, getset( $options, 'sword_deposit_url', '' ), __( 'Deposit URL*', 'pressbooks-excalibur' ), '', true );
+					$this->displaySelect( 'sword_deposit_url', $deposit_urls, getset( $options, 'sword_deposit_url', '' ), __( 'Deposit URL*', 'excalibur' ), '', true );
 					?>
 				</table>
 			<?php } else { ?>
-				<p><em><?php _e( "Configuration problem: You don't have access to any Dspace collections? Contact your system administrator.", 'pressbooks-excalibur' ) ?></em></p>
+				<p><em><?php _e( "Configuration problem: You don't have access to any Dspace collections? Contact your system administrator.", 'excalibur' ) ?></em></p>
 			<?php } ?>
-			<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e( 'Submit to DSpace', 'pressbooks-excalibur' ); ?>">
+			<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e( 'Submit to DSpace', 'excalibur' ); ?>">
 			</p>
 		</form>
 		<pre></pre>
