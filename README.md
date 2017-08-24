@@ -11,7 +11,9 @@ Excalibur is a SWORD protocol client for Pressbooks.
 
 ## Description ##
 
-Excalibur is a SWORD protocol client for Pressbooks, which supports submitting your book to a DSpace repository.
+Excalibur is a [SWORD protocol](https://en.wikipedia.org/wiki/SWORD_(protocol)) client for Pressbooks, which supports submitting your book to a [DSpace](http://www.dspace.org/) repository. 
+
+Installing this plugin will add "Submit to DSpace" under the Publish menu.
 
 ## Installation ##
 
