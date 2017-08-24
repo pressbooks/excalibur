@@ -13,13 +13,17 @@ Excalibur is a SWORD protocol client for Pressbooks.
 
 Excalibur is a SWORD protocol client for Pressbooks, which supports submitting your book to a DSpace repository.
 
+Installing this plugin will add "Submit to DSpace" under the Publish menu.
+
 == Installation ==
 
 ```
 composer require pressbooks/excalibur
 ```
 
-Optional config:
+Or, download the latest version from the releases page and unzip it into your WordPress plugin directory): https://github.com/pressbooks/excalibur/releases
+
+= Optional config =
 
     putenv( 'PB_SWORD_USER=dspace' );
     putenv( 'PB_SWORD_PASSWORD=dspace' );

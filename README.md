@@ -21,7 +21,9 @@ Installing this plugin will add "Submit to DSpace" under the Publish menu.
 composer require pressbooks/excalibur
 ```
 
-Optional config:
+_(Or, download the latest version from the [releases page](https://github.com/pressbooks/excalibur/releases) and unzip it into your WordPress plugin directory)_
+
+### Optional config ###
 
     putenv( 'PB_SWORD_USER=dspace' );
     putenv( 'PB_SWORD_PASSWORD=dspace' );
