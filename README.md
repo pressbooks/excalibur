@@ -1,9 +1,9 @@
 # Excalibur #
 **Contributors:** greatislander, conner_bw  
 **Tags:** publishing, SWORD, libraries, repositories  
-**Requires at least:** 4.8  
-**Tested up to:** 4.8  
-**Stable tag:** 0.1.0  
+**Requires at least:** 4.8.1  
+**Tested up to:** 4.8.1  
+**Stable tag:** 0.2.0  
 **License:** GPLv2 or later, New BSD License  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -11,7 +11,7 @@ Excalibur is a SWORD protocol client for Pressbooks.
 
 ## Description ##
 
-Excalibur is a [SWORD protocol](https://en.wikipedia.org/wiki/SWORD_(protocol)) client for Pressbooks, which supports submitting your book to a [DSpace](http://www.dspace.org/) repository. 
+Excalibur is a SWORD protocol client for Pressbooks, which supports submitting your book to a DSpace repository.
 
 Installing this plugin will add "Submit to DSpace" under the Publish menu.
 
@@ -21,7 +21,7 @@ Installing this plugin will add "Submit to DSpace" under the Publish menu.
 composer require pressbooks/excalibur
 ```
 
-_(Or, download the latest version from the [releases page](https://github.com/pressbooks/excalibur/releases) and unzip it into your WordPress plugin directory)_
+Or, download the latest version from the releases page and unzip it into your WordPress plugin directory): https://github.com/pressbooks/excalibur/releases
 
 ### Optional config ###
 
@@ -44,13 +44,16 @@ _(Or, download the latest version from the [releases page](https://github.com/pr
 
 ## Changelog ##
 
+### 0.2.0 ###
+* Update pressbooks/mix to 2.1.
+
 ### 0.1.0 ###
-Initial release.
+* Initial release.
 
 ## Upgrade Notice ##
 
 ### 0.1.0 ###
-Initial release.
+* Initial release.
 
 ## License ##
 

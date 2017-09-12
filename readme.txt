@@ -1,9 +1,9 @@
 === Excalibur ===
 Contributors: greatislander, conner_bw
 Tags: publishing, SWORD, libraries, repositories
-Requires at least: 4.8
-Tested up to: 4.8
-Stable tag: 0.1.0
+Requires at least: 4.8.1
+Tested up to: 4.8.1
+Stable tag: 0.2.0
 License: GPLv2 or later, New BSD License
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,13 +44,16 @@ Or, download the latest version from the releases page and unzip it into your Wo
 
 == Changelog ==
 
+= 0.2.0 =
+* Update pressbooks/mix to 2.1.
+
 = 0.1.0 =
-Initial release.
+* Initial release.
 
 == Upgrade Notice ==
 
 = 0.1.0 =
-Initial release.
+* Initial release.
 
 == License ==
 
