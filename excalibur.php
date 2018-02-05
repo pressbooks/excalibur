@@ -10,7 +10,7 @@
  * GitHub Plugin URI: https://github.com/pressbooks/excalibur
  * Release Asset: true
  * Network: True
- * Version: 0.1.0
+ * Version: 0.3.0
  *
  * @package Excalibur
  */

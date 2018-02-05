@@ -2,7 +2,11 @@
 
 namespace Excalibur\Dspace;
 
+use Pressbooks\Book;
+use Pressbooks\Contributors;
+use Pressbooks\Metadata;
 use function \Pressbooks\Utility\getset;
+use function Pressbooks\Utility\oxford_comma;
 
 class Admin extends \Excalibur\Admin {
 
@@ -41,14 +45,10 @@ class Admin extends \Excalibur\Admin {
 			return;
 		}
 
-		$metapost = ( new \Pressbooks\Metadata() )->getMetaPost();
-
+		$metapost = ( new Metadata() )->getMetaPost();
 		if ( ! empty( $_POST ) && current_user_can( 'edit_posts' ) && check_admin_referer( self::SLUG ) ) {
 			// Do something with $_POST data
-			global $blog_id;
 			$this->saveOptions( $_POST );
-			$this->updateMetadata( $metapost->ID, $_POST );
-			wp_cache_delete( "book-inf-{$blog_id}", 'pb' );
 			try {
 				$this->post( $_POST );
 				echo '<div id="message" class="updated"><p>Success!</p></div>';
@@ -69,17 +69,23 @@ class Admin extends \Excalibur\Admin {
 
 		$form_url = wp_nonce_url( get_admin_url( get_current_blog_id(), '/admin.php?page=' . self::SLUG ), self::SLUG );
 		$book_info_url = admin_url( 'post.php?post=' . absint( $metapost->ID ) . '&action=edit' );
-		$metadata = \Pressbooks\Book::getBookInformation(); // Get latest metadata
 		$options = get_option( self::OPTION, [] );
+		$metadata = $this->overrideMetadataWithOptions( Book::getBookInformation(), $options );
 
 		?>
 		<h1><?php _e( 'Submit to DSpace', 'excalibur' ); ?></h1>
 		<p><?php _e( 'Pressbooks can submit your EPUB or PDF to a <a href="http://www.dspace.org/">DSpace</a> repository. Please complete the information below before submitting.', 'excalibur' ); ?></p>
 		<h2><?php _e( 'Book Information', 'excalibur' ); ?></h2>
-		<p><?php printf( __( 'This information comes from your book&rsquo;s <a href="%s">Book Information</a> page. Any changes made here will be saved there as well.', 'excalibur' ), $book_info_url ); ?></p>
+		<p><?php printf( __( 'This information comes from your book&rsquo;s <a href="%s">Book Information</a> page. (<strong>IMPORTANT NOTE:</strong> Changes you make here will <strong>NOT</strong> be reflected on the Book Information page.)', 'excalibur' ), $book_info_url ); ?></p>
 		<form id="dspace-form" action="<?php echo $form_url; ?>" method="POST">
 			<table class="form-table">
 				<?php
+
+				// We mix deprecated contributor slugs with new contributor slugs when generating the HTML form, i.e.
+				// { Left side: } Deprecated contributor slugs. Comes from 'pressbooks_dspace_options'
+				// { Right side: } New contributor slugs. Comes from \Pressbooks\Book::getBookInformation()
+				// Brave person from the future! You should probably rewrite this entire class. Enjoy?
+
 				// SWORD: Identifier:
 				$this->displayTextInput( 'sword_identifier', getset( $options, 'sword_identifier', get_site_url() ), __( 'Identifier*', 'excalibur' ), '', true );
 
@@ -87,10 +93,10 @@ class Admin extends \Excalibur\Admin {
 				$this->displayTextInput( 'pb_title', $metadata['pb_title'], __( 'Title*', 'excalibur' ), '', true );
 
 				// SWORD:  Custodian
-				$this->displayTextInput( 'pb_author', getset( $metadata, 'pb_author', '' ), __( 'Author*', 'excalibur' ), '', true );
+				$this->displayTextInput( 'pb_author', getset( $metadata, 'pb_authors', '' ), __( 'Author*', 'excalibur' ), '', true );
 
 				// SWORD: Creators
-				$this->displayTextInputRows( 'pb_contributing_authors', getset( $metadata, 'pb_contributing_authors', '' ), __( 'Contributing Author(s)', 'excalibur' ), '', 'regular-text contributing-author' );
+				$this->displayTextInputRows( 'pb_contributing_authors', getset( $metadata, 'pb_contributors', '' ), __( 'Contributing Author(s)', 'excalibur' ), '', 'regular-text contributing-author' );
 
 				// SWORD: Copyright Holder
 				$this->displayTextInput( 'pb_copyright_holder', getset( $metadata, 'pb_copyright_holder', '' ), __( 'Copyright Holder', 'excalibur' ) );
@@ -146,6 +152,30 @@ class Admin extends \Excalibur\Admin {
 	}
 
 	/**
+	 * Use options over metadata
+	 *
+	 * @param array $metadata
+	 * @param array $options
+	 *
+	 * @return array
+	 */
+	public function overrideMetadataWithOptions( $metadata, $options ) {
+		$contributors = new Contributors();
+		foreach ( $options as $key => $val ) {
+			if ( strpos( $key, 'pb_' ) !== 0 || in_array( $key, $contributors->valid, true ) ) {
+				continue; // Don't use
+			} elseif ( in_array( $key, $contributors->deprecated, true ) ) {
+				$metadata[ $contributors->maybeUpgradeSlug( $key ) ] = is_array( $val ) ? oxford_comma( $val ) : $val;
+			} elseif ( is_array( $val ) ) {
+				$metadata[ $key ] = implode( ', ', $val );
+			} else {
+				$metadata[ $key ] = $val;
+			}
+		}
+		return $metadata;
+	}
+
+	/**
 	 * @return bool
 	 */
 	protected function hasConfig() {
@@ -172,35 +202,6 @@ class Admin extends \Excalibur\Admin {
 	}
 
 	/**
-	 * Update back mapped Pressbooks metadata
-	 *
-	 * @param int $id meta post id
-	 * @param array $data form-data
-	 */
-	protected function updateMetadata( $id, $data ) {
-		foreach ( $data as $key => $value ) {
-			if ( strpos( $key, 'pb_' ) !== 0 ) {
-				continue;
-			}
-
-			// Save Back into Pressbooks metadata
-			if ( in_array( $key, [ 'pb_title', 'pb_subtitle', 'pb_author', 'pb_publisher', 'pb_about_50', 'pb_copyright_holder' ], true ) ) {
-				// Strings
-				$this->updateString( $id, $key, $value );
-			} elseif ( in_array( $key, [ 'pb_publication_date' ], true ) ) {
-				// Strings in date format
-				$this->updateString( $id, $key, strtotime( $value ) );
-			} elseif ( in_array( $key, [ 'pb_contributing_authors' ], true ) ) {
-				// Sanitize an array of string then update it
-				$this->updateArray( $id, $key, $value );
-			} elseif ( in_array( $key, [ 'pb_language' ], true ) ) {
-				// Select
-				$this->updateSelect( $id, $key, $value );
-			}
-		}
-	}
-
-	/**
 	 * Save DSpace specific options, not back mapped Pressbooks metadata
 	 *
 	 * @param array $data form-data
@@ -209,54 +210,34 @@ class Admin extends \Excalibur\Admin {
 		$option = [];
 		foreach ( $data as $key => $value ) {
 			if ( in_array( $key, [ 'sword_user', 'sword_identifier', 'sword_citation' ], true ) ) {
+				// Strings
 				$option[ $key ] = sanitize_text_field( $value );
 			} elseif ( in_array( $key, [ 'sword_url', 'sword_deposit_url', 'sword_status_statement' ], true ) ) {
+				// URLs
 				$option[ $key ] = esc_url_raw( $value );
+			} elseif ( strpos( $key, 'pb_' ) === 0 ) {
+				if ( in_array( $key, [ 'pb_title', 'pb_subtitle', 'pb_author', 'pb_publisher', 'pb_about_50', 'pb_copyright_holder' ], true ) ) {
+					// Strings
+					$option[ $key ] = sanitize_text_field( $value );
+				} elseif ( in_array( $key, [ 'pb_publication_date' ], true ) ) {
+					// Strings in date format
+					$option[ $key ] = sanitize_text_field( strtotime( $value ) );
+				} elseif ( in_array( $key, [ 'pb_contributing_authors' ], true ) ) {
+					// Array of strings
+					$option[ $key ] = array_map( 'sanitize_text_field', $value );
+				} elseif ( in_array( $key, [ 'pb_language' ], true ) ) {
+					// Trusted?
+					$option[ $key ] = $value;
+				}
 			}
 		}
 		update_option( self::OPTION, $option );
 	}
 
 	/**
-	 * @param $id
-	 * @param $key
-	 * @param $value
-	 */
-	protected function updateString( $id, $key, $value ) {
-		$value = sanitize_text_field( $value );
-		if ( $value !== '' ) {
-			update_post_meta( $id, $key, $value );
-		} else {
-			delete_post_meta( $id, $key );
-		}
-	}
-
-	/**
-	 * @param $id
-	 * @param $key
-	 * @param $value
-	 */
-	protected function updateSelect( $id, $key, $value ) {
-		update_post_meta( $id, $key, $value );
-	}
-
-	/**
-	 * @param $id
-	 * @param $key
-	 * @param $value
-	 */
-	protected function updateArray( $id, $key, $value ) {
-		$values = array_map( 'sanitize_text_field', $value );
-		delete_post_meta( $id, $key );
-		foreach ( $values as $row ) {
-			if ( $row !== '' ) {
-				add_post_meta( $id, $key, $row );
-			}
-		}
-	}
-
-	/**
 	 * @param array $data form-data
+	 *
+	 * @throws \Exception
 	 */
 	protected function post( $data ) {
 
@@ -280,6 +261,8 @@ class Admin extends \Excalibur\Admin {
 	}
 
 	/**
+	 * @throws \Exception
+	 *
 	 * @return array
 	 */
 	protected function depositUrls() {
