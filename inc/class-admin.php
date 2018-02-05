@@ -3,6 +3,7 @@
 namespace Excalibur;
 
 use PressbooksMix\Assets;
+use function Pressbooks\Utility\oxford_comma_explode;
 
 abstract class Admin {
 
@@ -87,7 +88,7 @@ abstract class Admin {
 		$rows = '';
 
 		if ( $value ) {
-			$values = explode( ', ', $value );
+			$values = oxford_comma_explode( $value );
 			$i = 0;
 			foreach ( $values as $row ) {
 				$rows .= sprintf(
