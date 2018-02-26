@@ -40,3 +40,21 @@ script:
 - vendor/bin/phpcs --standard=phpcs.ruleset.xml *.php inc/ bin/
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+before_deploy:
+- export TRAVIS_PROJECT_SLUG="$(basename $TRAVIS_BUILD_DIR)"
+- composer install --no-dev --optimize-autoloader
+- cd ../
+- zip -9 -ry $TRAVIS_BUILD_DIR/$TRAVIS_PROJECT_SLUG-$TRAVIS_TAG.zip $TRAVIS_PROJECT_SLUG
+  -x *.git* *assets/\* *bin/\* *node_modules/\* *tests/\* *.editorconfig* *.gitattributes*
+  *.github* *.gitignore* *.phpstorm.meta.php* *.travis.yml* *.tx/\* *Gruntfile.js*
+  *package-lock.json* *phpcs.ruleset.xml* *phpunit.xml* *webpack.mix.js* *yarn.lock*
+- cd $TRAVIS_BUILD_DIR
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: XumduuKfQHqRBPH+ENPFRMfBEYgIc43xA0JB3tZSLrUhM09VZqV49q/krEdMaFW2zRGHpWp7ugdizplpebrf4Ua6WbSJ93+dQlKnQjin+OfoqfGDqGvHmO4YL+6kTgSwex46GeMZUoKPpQLvTrGb7s/oJT2ei3aMpvHrWQlCpw9OydRi+Iky7OuMKzwbtbz6tFvaMcsI9ZKir/XKRd/R11tzCdAKBifR1bopLkG1ahJuwH9pFF5mw56HUYBRYVylsd2wf9ETiShXuXrawQXIAGhF+1kk0rT6L16VNaatBo2tccxwCqrKDVghFX/4VoCemCGgh0WaeoDsfiVGmv5voZ450UqeT/56zZnydhtHPGymGG+/1dBdwKs+tZFMggZCgFMQKyo77BvNnI88xZWhKfnwkratOZ+9VXhP/bXiyMB0pike7DuJam/N3/75zL2BC9megRdoY0G33t4PFNbRodRmQ9WRLct1SkUbZpCZOK6ExTRh09RPxqIPOITKo3QkuQQ4Ats6GsT7tSHFzMD3JbCrUWsVc0movNvA1qKYO4s7jbrNmwf4oysW5bgCNhVbXmgXY19Y+CemMhBlnwEt8KO0ispy1B5FalDFUmagWNzOSaVlNeZtSYblMWe2Y9FsJLC/gCoksOB3PqeChAAEc6cp3emXZsAUh0UkG4PwECk=
+  file: "excalibur-$TRAVIS_TAG.zip"
+  on:
+    tags: true
+    repo: pressbooks/excalibur

@@ -11,6 +11,7 @@
  * Release Asset: true
  * Network: True
  * Version: 0.3.0
+ * License: GPL 2.0+
  *
  * @package Excalibur
  */

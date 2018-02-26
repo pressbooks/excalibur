@@ -1,8 +1,8 @@
 === Excalibur ===
 Contributors: greatislander, conner_bw
 Tags: publishing, SWORD, libraries, repositories
-Requires at least: 4.9.2
-Tested up to: 4.9.2
+Requires at least: 4.9.4
+Tested up to: 4.9.4
 Stable tag: 0.3.0
 License: GPLv2 or later, New BSD License
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +21,7 @@ Installing this plugin will add "Submit to DSpace" under the Publish menu.
 
 * PHP >= 7.0
 * Pressbooks >= 5.0.0
-* WordPress >= 4.9.2
+* WordPress >= 4.9.4
 
 = Installing =
 
