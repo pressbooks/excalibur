@@ -3,12 +3,13 @@ notifications:
   email:
     on_success: never
     on_failure: change
+  slack:
+    secure: "dfp0LgViSmv3nGDN9zNnM9Yp7431NbslJ1oT5lTQc1lw55bog7svdGLOruEYDyF/apZYWA06EMPraU/k1/m3d+t+S1doTZCZbLk54M9XV3foEBMz1lIeJnruwKj+yKcH2lxCe+vG2dRrhZzsvg5tNlQhtgk1iBqh4enSxHcc80k+HJdJ/kU5J4fce+RCn8LtOMLT1G4wF+OPEaTEc6LDMG3WnaXXW4ZV4ptipLR5QNQ/OhYsY3NWR9Qpfm3/calNVIdF33uiNqcETjLt3NRPBKYM32/LOE0RiLm9+zfYW7uKK4M5YXiiimrS+rU7SDTxyGxkiytv13si8PKBlyRKT3U/GYDFpe06EBG3NzsuE6/vS9T8OYPBQ/lIT1VjpJxdMh9uxdz6IKeCyAbc7t6AGwnZs+T/tB+8Q4PkpcaF4l3TgkV4er8uN+ZljuGl3DS3uO4sVZg33wmogF6tCoSzaASIHLmPtdGbgzyKQfeG7DkgPjy3TutjREnLTRcWSLH31JPMdofKe9BRAuTjkw5GYQ2F4QnULGfZVGE/v8g/UibirRdPfmVRIgQ4gozDXETrtZkf0gz2eEHUYhjuvPXHRBYPqSgwohoNa4syjXiYdG1OKcc5nYLnQVIystE3XEiBXcnbUiEE+lbo2wS5OPCUFDgKfHTDxWJcahDk7AFvETg="
 branches:
   only:
   - dev
   - "/\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
 php:
-- 5.6
 - 7.0
 - 7.1
 - nightly
@@ -33,6 +34,9 @@ install:
 - composer install
 before_script:
 - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+- git clone --depth=1 https://github.com/pressbooks/pressbooks.git ../pressbooks
+- cd ../pressbooks && composer install --no-dev
+- cd ../excalibur
 script:
 - yarn run lint
 - yarn run production
