@@ -53,8 +53,8 @@ Or, download the latest version from the releases page and unzip it into your Wo
 
 == Changelog ==
 = 0.3.2 =
-* Update license
-* Update Pressbooks tested up to version
+* Update license: [991d479](https://github.com/pressbooks/excalibur/commit/991d479)
+* Update Pressbooks tested up to version: [991d479](https://github.com/pressbooks/excalibur/commit/991d479)
 
 = 0.3.1 =
 * Add release script for Travis.
