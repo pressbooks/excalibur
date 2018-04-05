@@ -45,12 +45,15 @@ class Admin extends \Excalibur\Admin {
 			return;
 		}
 
+		$post = $_POST;
+		if ( function_exists( 'wp_magic_quotes' ) ) {
+			$post = stripslashes_deep( $post );
+		}
 		$metapost = ( new Metadata() )->getMetaPost();
-		if ( ! empty( $_POST ) && current_user_can( 'edit_posts' ) && check_admin_referer( self::SLUG ) ) {
-			// Do something with $_POST data
-			$this->saveOptions( $_POST );
+		if ( ! empty( $post ) && current_user_can( 'edit_posts' ) && check_admin_referer( self::SLUG ) ) {
+			$this->saveOptions( $post );
 			try {
-				$this->post( $_POST );
+				$this->post( $post );
 				echo '<div id="message" class="updated"><p>Success!</p></div>';
 			} catch ( \Exception $e ) {
 				printf( '<div id="message" class="error"><p>%s</p></div>', $e->getMessage() );
@@ -104,7 +107,7 @@ class Admin extends \Excalibur\Admin {
 				$this->displayTextInput( 'pb_publisher', getset( $metadata, 'pb_publisher', '' ), __( 'Publisher', 'excalibur' ), null, false );
 
 				// SWORD: Date Available
-				$this->displayTextInput( 'pb_publication_date', ( isset( $metadata['pb_publication_date'] ) ) ? strftime( '%Y-%m-%d', $metadata['pb_publication_date'] ) : '', __( 'Publication Date', 'excalibur' ) );
+				$this->displayTextInput( 'pb_publication_date', ( ! empty( $metadata['pb_publication_date'] ) ) ? strftime( '%Y-%m-%d', $metadata['pb_publication_date'] ) : '', __( 'Publication Date', 'excalibur' ) );
 
 				// SWORD: Abstract
 				$this->displayTextArea( 'pb_about_50', getset( $metadata, 'pb_about_50', '' ), __( 'Short Description', 'excalibur' ) );
@@ -113,7 +116,7 @@ class Admin extends \Excalibur\Admin {
 				$this->displayTextArea( 'sword_citation', getset( $options, 'sword_citation', '' ), __( 'Citation', 'excalibur' ) );
 
 				// SWORD: Language
-				$this->displaySelect( 'pb_language', \Pressbooks\L10n\supported_languages(), ( isset( $metadata['pb_language'] ) ) ? $metadata['pb_language'] : 'en', __( 'Language*', 'excalibur' ), '', true );
+				$this->displaySelect( 'pb_language', \Pressbooks\L10n\supported_languages(), ( ! empty( $metadata['pb_language'] ) ) ? $metadata['pb_language'] : 'en', __( 'Language*', 'excalibur' ), '', true );
 
 				// SWORD: Status Statement
 				$status_statements = [
