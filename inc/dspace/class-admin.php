@@ -45,7 +45,7 @@ class Admin extends \Excalibur\Admin {
 			return;
 		}
 
-		$post = $_POST;
+		$post = $_POST; // @codingStandardsIgnoreLine
 		if ( function_exists( 'wp_magic_quotes' ) ) {
 			$post = stripslashes_deep( $post );
 		}
