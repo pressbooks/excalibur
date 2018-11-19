@@ -2,11 +2,11 @@
 
 namespace Excalibur\Dspace;
 
+use function Pressbooks\Utility\getset;
+use function Pressbooks\Utility\oxford_comma;
 use Pressbooks\Book;
 use Pressbooks\Contributors;
 use Pressbooks\Metadata;
-use function \Pressbooks\Utility\getset;
-use function Pressbooks\Utility\oxford_comma;
 
 class Admin extends \Excalibur\Admin {
 
@@ -79,7 +79,12 @@ class Admin extends \Excalibur\Admin {
 		<h1><?php _e( 'Submit to DSpace', 'excalibur' ); ?></h1>
 		<p><?php _e( 'Pressbooks can submit your EPUB or PDF to a <a href="http://www.dspace.org/">DSpace</a> repository. Please complete the information below before submitting.', 'excalibur' ); ?></p>
 		<h2><?php _e( 'Book Information', 'excalibur' ); ?></h2>
-		<p><?php printf( __( 'This information comes from your book&rsquo;s <a href="%s">Book Information</a> page. (<strong>IMPORTANT NOTE:</strong> Changes you make here will <strong>NOT</strong> be reflected on the Book Information page.)', 'excalibur' ), $book_info_url ); ?></p>
+		<p>
+			<?php
+			/* translators: %s: Book information URL */
+			printf( __( 'This information comes from your book&rsquo;s <a href="%s">Book Information</a> page. (<strong>IMPORTANT NOTE:</strong> Changes you make here will <strong>NOT</strong> be reflected on the Book Information page.)', 'excalibur' ), $book_info_url );
+			?>
+		</p>
 		<form id="dspace-form" action="<?php echo $form_url; ?>" method="POST">
 			<table class="form-table">
 				<?php

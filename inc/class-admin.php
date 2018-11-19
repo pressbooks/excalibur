@@ -2,8 +2,8 @@
 
 namespace Excalibur;
 
-use PressbooksMix\Assets;
 use function Pressbooks\Utility\oxford_comma_explode;
+use PressbooksMix\Assets;
 
 abstract class Admin {
 
