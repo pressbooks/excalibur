@@ -11,7 +11,7 @@
  * Release Asset: true
  * Pressbooks tested up to: 5.6.0
  * Network: True
- * Version: 0.3.3
+ * Version: 0.3.4
  * License: GPL v3 or later
  *
  * @package Excalibur
