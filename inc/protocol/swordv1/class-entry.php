@@ -241,7 +241,7 @@ class Entry {
 	 */
 	public function debug() {
 		echo '<pre>';
-		echo htmlentities( print_r( (array) $this, true ) );
+		echo htmlentities( print_r( (array) $this, true ) ); // @codingStandardsIgnoreLine
 		echo '</pre>';
 	}
 }

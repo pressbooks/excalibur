@@ -60,7 +60,7 @@ class Deposit {
 	 * @param string $deposit_url
 	 * @param string $username
 	 * @param string $password
-	 * @param \Swordapp\Client\SWORDAPPClient $sword (optional)
+	 * @param \Excalibur\Protocol\SwordV1\Client $sword (optional)
 	 */
 	public function __construct( $url, $deposit_url, $username, $password, $sword = null ) {
 
@@ -259,8 +259,6 @@ class Deposit {
 
 	/**
 	 * Create a temporary directory
-	 *
-	 * @throws \Exception
 	 */
 	protected function deleteTmpDir() {
 		// Cleanup temporary directory, if any
