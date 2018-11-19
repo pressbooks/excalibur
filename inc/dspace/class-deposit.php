@@ -12,7 +12,16 @@ class Deposit {
 	 *
 	 * @var array
 	 */
-	static public $supportedExportTypes = [ 'pdf', 'print-pdf', 'epub', 'epub3', 'mobi', 'xhtml' ];
+	static public $supportedExportTypes = [
+		'epub',
+		'epub3',
+		'mobi',
+		'pdf',
+		'print-pdf',
+		'vanillawxr',
+		'wxr',
+		'xhtml',
+	];
 
 	/**
 	 * @var \Excalibur\Protocol\SwordV1\Client
