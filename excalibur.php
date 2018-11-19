@@ -9,7 +9,7 @@
  * Domain Path:     /languages
  * GitHub Plugin URI: https://github.com/pressbooks/excalibur
  * Release Asset: true
- * Pressbooks tested up to: 5.3.0
+ * Pressbooks tested up to: 5.6.0
  * Network: True
  * Version: 0.3.3
  * License: GPL v3 or later
