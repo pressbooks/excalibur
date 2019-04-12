@@ -86,7 +86,7 @@ class Admin extends \Excalibur\Admin {
 			?>
 		</p>
 		<form id="dspace-form" action="<?php echo $form_url; ?>" method="POST">
-			<table class="form-table">
+			<table class="form-table" role="none">
 				<?php
 
 				// We mix deprecated contributor slugs with new contributor slugs when generating the HTML form, i.e.
@@ -135,7 +135,7 @@ class Admin extends \Excalibur\Admin {
 			<?php if ( ! $this->hasConfig() ) { ?>
 				<h2><?php _e( 'Submission Details', 'excalibur' ); ?></h2>
 				<p><?php _e( 'This information is required to complete your DSpace submission and will be saved in case you need to resubmit your book at a later date.', 'excalibur' ); ?>
-				<table class="form-table">
+				<table class="form-table" role="none">
 					<?php
 					$this->displayTextInput( 'sword_deposit_url', getset( $options, 'sword_deposit_url', '' ), __( 'Deposit URL*', 'excalibur' ), '', true );
 					$this->displayTextInput( 'sword_user', getset( $options, 'sword_user', '' ), __( 'Username*', 'excalibur' ), '', true );
@@ -143,7 +143,7 @@ class Admin extends \Excalibur\Admin {
 					?>
 				</table>
 			<?php } elseif ( ! empty( $deposit_urls ) ) { ?>
-				<table class="form-table">
+				<table class="form-table" role="none">
 					<?php
 					$this->displaySelect( 'sword_deposit_url', $deposit_urls, getset( $options, 'sword_deposit_url', '' ), __( 'Deposit URL*', 'excalibur' ), '', true );
 					?>
