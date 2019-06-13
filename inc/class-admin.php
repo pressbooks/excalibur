@@ -19,7 +19,7 @@ abstract class Admin {
 	 */
 	public function assets( $hook ) {
 
-		if ( $hook !== 'publish_page_' . static::SLUG ) {
+		if ( $hook !== get_plugin_page_hookname( static::SLUG, 'pb_publish' ) ) {
 			return;
 		}
 

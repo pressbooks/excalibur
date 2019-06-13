@@ -23,7 +23,7 @@
 
 if ( ! function_exists( 'pb_meets_minimum_requirements' ) && ! @include_once( WP_PLUGIN_DIR . '/pressbooks/compatibility.php' ) ) { // @codingStandardsIgnoreLine
 	add_action('admin_notices', function () {
-		echo '<div id="message" class="error fade"><p>' . __( 'Cannot find Pressbooks install.', 'excalibur' ) . '</p></div>';
+		echo '<div id="message" role="alert" class="error fade"><p>' . __( 'Cannot find Pressbooks install.', 'excalibur' ) . '</p></div>';
 	});
 	return;
 } elseif ( ! pb_meets_minimum_requirements() ) {

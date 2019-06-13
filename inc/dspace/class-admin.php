@@ -39,7 +39,7 @@ class Admin extends \Excalibur\Admin {
 
 		if ( ! $this->hasExports() ) {
 			printf(
-				'<div id="message" class="error"><p>%s</p></div></div>',
+				'<div id="message" role="alert" class="error"><p>%s</p></div></div>',
 				__( 'No export files were found. Please export your book as EPUB, MOBI and/or PDF and return to this page to complete your submission.', 'excalibur' )
 			);
 			return;
@@ -54,9 +54,9 @@ class Admin extends \Excalibur\Admin {
 			$this->saveOptions( $post );
 			try {
 				$this->post( $post );
-				echo '<div id="message" class="updated"><p>Success!</p></div>';
+				echo '<div role="status" id="message" class="updated"><p>Success!</p></div>';
 			} catch ( \Exception $e ) {
-				printf( '<div id="message" class="error"><p>%s</p></div>', $e->getMessage() );
+				printf( '<div id="message" role="alert" class="error"><p>%s</p></div>', $e->getMessage() );
 			}
 		}
 
@@ -66,7 +66,7 @@ class Admin extends \Excalibur\Admin {
 			try {
 				$deposit_urls = $this->depositUrls();
 			} catch ( \Exception $e ) {
-				printf( '<div id="message" class="error"><p>%s</p></div>', $e->getMessage() );
+				printf( '<div id="message" role="alert" class="error"><p>%s</p></div>', $e->getMessage() );
 			}
 		}
 
