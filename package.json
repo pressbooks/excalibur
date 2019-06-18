@@ -6,14 +6,10 @@
   "scripts": {
     "localize": "grunt i18n",
     "readme": "grunt readme",
-    "dev":
-      "cross-env NODE_ENV=development webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch":
-      "cross-env NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "hot":
-      "cross-env NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production":
-      "cross-env NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "dev": "cross-env NODE_ENV=development webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "lint": "stylelint \"assets/styles/**/*.scss\" --syntax scss"
   },
   "engines": {
@@ -23,7 +19,7 @@
     "grunt": "~0.4.5",
     "grunt-wp-i18n": "~0.5.0",
     "grunt-wp-readme-to-markdown": "~1.0.0",
-    "pressbooks-build-tools": "^0.11.0",
+    "pressbooks-build-tools": "^1.4.3",
     "cross-env": "^5.0.1",
     "select2": "^4.0.3"
   },
