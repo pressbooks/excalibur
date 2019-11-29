@@ -1,21 +1,18 @@
 <?php
-/**
- * Plugin Name:     Excalibur
- * Plugin URI:      https://github.com/pressbooks/excalibur/
- * Description:     Excalibur is a SWORD protocol client for Pressbooks.
- * Author:          Pressbooks (Book Oven Inc.)
- * Author URI:      https://github.com/pressbooks
- * Text Domain:     excalibur
- * Domain Path:     /languages
- * GitHub Plugin URI: https://github.com/pressbooks/excalibur
- * Release Asset: true
- * Pressbooks tested up to: 5.6.0
- * Network: True
- * Version: 0.3.4
- * License: GPL v3 or later
- *
- * @package Excalibur
- */
+/*
+Plugin Name: Excalibur
+Plugin URI: https://github.com/pressbooks/excalibur/
+GitHub Plugin URI: pressbooks/excalibur
+Release Asset: true
+Description: Excalibur is a SWORD protocol client for Pressbooks.
+Version: 0.3.4
+Author: Pressbooks (Book Oven Inc.)
+Author URI: https://pressbooks.org
+Requires PHP: 7.1
+Text Domain: excalibur
+License: GPL v3 or later
+Network: True
+*/
 
 // -------------------------------------------------------------------------------------------------------------------
 // Check minimum requirements
