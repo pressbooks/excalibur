@@ -21,6 +21,9 @@
     "select2": "^4.0.3"
   },
   "devDependencies": {},
+  "eslintConfig": {
+    "extends": "./node_modules/pressbooks-build-tools/config/eslint.js"
+  },
   "stylelint": {
     "extends": "./node_modules/pressbooks-build-tools/config/stylelint.js",
     "rules": {
