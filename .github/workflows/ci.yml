@@ -47,6 +47,7 @@ jobs:
         run: |
           node -v
           npm install
+          npm run install-build-tools
           npm run build
           export PATH="$HOME/.composer/vendor/bin:$PATH"
           composer install --no-interaction
