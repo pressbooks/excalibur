@@ -1,8 +1,10 @@
 {
   "name": "@pressbooks/excalibur",
+  "description": "Excalibur is a SWORD protocol client for Pressbooks.",
   "main": "Gruntfile.js",
   "author": "Pressbooks (Book Oven Inc.) <code@pressbooks.com>",
   "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/pressbooks/excalibur",
   "scripts": {
     "install-build-tools": "npm install --no-save pressbooks-build-tools",
     "watch": "mix watch",
