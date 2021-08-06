@@ -14,10 +14,10 @@
     "lint:styles": "cross-env NODE_ENV=development node_modules/stylelint/bin/stylelint.js \"assets/styles/**/*.scss\" --syntax scss"
   },
   "engines": {
-    "node": ">= 10"
+    "node": ">= 14"
   },
   "dependencies": {
-    "select2": "^4.0.3"
+    "select2": "^4.0.13"
   },
   "devDependencies": {},
   "eslintConfig": {

@@ -13,9 +13,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        php: [7.3] # TODO: Add 7.4 and fix the errors.
+        php: [7.3, 7.4] # TODO: Fix any 7.4 errors.
         os: [ubuntu-18.04]
-        wordpress: [5.7.2, latest]
+        wordpress: [5.8, latest]
 
     name: PHPUnit - ${{ matrix.php }} - ${{ matrix.wordpress }}
 
