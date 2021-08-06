@@ -21,7 +21,9 @@
   "dependencies": {
     "select2": "^4.0.13"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "pressbooks-build-tools": "^3.0.1"
+  },
   "eslintConfig": {
     "extends": "./node_modules/pressbooks-build-tools/config/eslint.js"
   },
