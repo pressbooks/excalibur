@@ -1,8 +1,10 @@
 {
   "name": "@pressbooks/excalibur",
+  "description": "Excalibur is a SWORD protocol client for Pressbooks.",
   "main": "Gruntfile.js",
   "author": "Pressbooks (Book Oven Inc.) <code@pressbooks.com>",
   "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/pressbooks/excalibur",
   "scripts": {
     "install-build-tools": "npm install --no-save pressbooks-build-tools",
     "watch": "mix watch",
@@ -14,12 +16,14 @@
     "lint:styles": "cross-env NODE_ENV=development node_modules/stylelint/bin/stylelint.js \"assets/styles/**/*.scss\" --syntax scss"
   },
   "engines": {
-    "node": ">= 10"
+    "node": ">= 14"
   },
   "dependencies": {
-    "select2": "^4.0.3"
+    "select2": "^4.0.13"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "pressbooks-build-tools": "^3.0.1"
+  },
   "eslintConfig": {
     "extends": "./node_modules/pressbooks-build-tools/config/eslint.js"
   },
