@@ -312,7 +312,6 @@ class Deposit {
 		return ( ( $only_empty ) ? ( count( scandir( $dirname ) ) <= 2 ) : ( ! is_dir( $dirname ) ) );
 	}
 
-
 	/**
 	 * Detect MIME Content-type for a file.
 	 *

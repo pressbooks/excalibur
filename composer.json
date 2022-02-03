@@ -26,11 +26,16 @@
   },
   "scripts": {
     "test": [
-      "vendor/bin/phpunit --configuration phpunit.xml --coverage-clover coverage.xml",
-      "@standards"
+      "vendor/bin/phpunit --configuration phpunit.xml"
+      ],
+    "test-coverage": [
+      "vendor/bin/phpunit --configuration phpunit.xml --coverage-clover coverage.xml"
     ],
     "standards": [
       "vendor/bin/phpcs --standard=phpcs.ruleset.xml *.php inc/ bin/"
+    ],
+    "fix": [
+      "vendor/bin/phpcbf --standard=phpcs.ruleset.xml *.php inc/ bin/"
     ],
     "localize": [
       "wp-pot -s \"**/*.php\" -o languages/excalibur.pot -p \"Pressbooks\" -t \"Pressbooks (Book Oven Inc.) <code@pressbooks.com>\"",

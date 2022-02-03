@@ -186,7 +186,6 @@ class Client {
 		return $sac_dresponse;
 	}
 
-
 	/**
 	 * Generic private method to initalise a curl transaction
 	 *
