@@ -70,7 +70,7 @@ jobs:
 
       - name: Lint assets
         run: npm run lint
-        if: maxtrix.experimental == false
+        if: matrix.experimental == false
 
       - name: Run PHP CodeSniffer
         run: composer standards
