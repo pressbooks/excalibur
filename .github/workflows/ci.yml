@@ -59,11 +59,10 @@ jobs:
           npm run install-build-tools
           npm run build
 
-      - name: Install Node dependencies
+      - name: Install PHP dependencies
         run: |
           export PATH="$HOME/.composer/vendor/bin:$PATH"
           composer install --no-interaction
-          composer global require "phpunit/phpunit:7.5.20"
           git clone --depth=1 https://github.com/pressbooks/pressbooks.git ../pressbooks
           cd ../pressbooks && composer install --no-dev
           cd ../excalibur
