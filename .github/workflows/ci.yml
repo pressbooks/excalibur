@@ -78,7 +78,7 @@ jobs:
         run: bash bin/install-wp-tests.sh wordpress_test root root localhost ${{ matrix.wordpress }}
 
       - name: Run PHP Tests
-        run: vendor/bin/phpunit --configuration phpunit.xml
+        run: composer test
 
       - name: Prepare Build
         if: startsWith(github.ref, 'refs/tags/')
