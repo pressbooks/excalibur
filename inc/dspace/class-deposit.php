@@ -288,7 +288,7 @@ class Deposit {
 			$darr[] = $dcur;
 			$d = opendir( $dcur );
 			if ( $d ) {
-				while ( $f = readdir( $d ) ) {
+				while ( $f = readdir( $d ) ) { // phpcs:ignore
 					if ( '.' === $f || '..' === $f ) {
 						continue;
 					}
@@ -311,7 +311,6 @@ class Deposit {
 
 		return ( ( $only_empty ) ? ( count( scandir( $dirname ) ) <= 2 ) : ( ! is_dir( $dirname ) ) );
 	}
-
 
 	/**
 	 * Detect MIME Content-type for a file.

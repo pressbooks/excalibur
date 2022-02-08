@@ -15,16 +15,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [7.3]
-        os: [ubuntu-18.04]
-        wordpress: [5.8, latest]
+        php: [7.3, 7.4]
+        os: [ubuntu-20.04]
+        wordpress: [5.9]
         experimental: [false]
         include:
-          - php: 7.4
+          - php: 8.0
             os: ubuntu-20.04
             wordpress: latest
             experimental: true
-    name: PHPUnit - ${{ matrix.php }} - ${{ matrix.wordpress }}
+    name: Tests - PHP ${{ matrix.php }} - WP ${{ matrix.wordpress }}
 
     steps:
       - name: Checkout code
@@ -59,18 +59,17 @@ jobs:
           npm run install-build-tools
           npm run build
 
-      - name: Install Node dependencies
+      - name: Install PHP dependencies
         run: |
           export PATH="$HOME/.composer/vendor/bin:$PATH"
           composer install --no-interaction
-          composer global require "phpunit/phpunit:7.5.20"
           git clone --depth=1 https://github.com/pressbooks/pressbooks.git ../pressbooks
           cd ../pressbooks && composer install --no-dev
           cd ../excalibur
 
       - name: Lint assets
         run: npm run lint
-        if: maxtrix.experimental == false
+        if: matrix.experimental == false
 
       - name: Run PHP CodeSniffer
         run: composer standards
@@ -79,8 +78,7 @@ jobs:
         run: bash bin/install-wp-tests.sh wordpress_test root root localhost ${{ matrix.wordpress }}
 
       - name: Run PHP Tests
-        run: vendor/bin/phpunit --configuration phpunit.xml
-        if: matrix.php != 7.3
+        run: composer test
 
       - name: Prepare Build
         if: startsWith(github.ref, 'refs/tags/')
