@@ -288,7 +288,7 @@ class Deposit {
 			$darr[] = $dcur;
 			$d = opendir( $dcur );
 			if ( $d ) {
-				while ( $f = readdir( $d ) ) {
+				while ( $f = readdir( $d ) ) { // phpcs:ignore
 					if ( '.' === $f || '..' === $f ) {
 						continue;
 					}
