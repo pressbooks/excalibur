@@ -16,7 +16,7 @@
   },
   "require": {
     "php": ">=7.3",
-    "composer/installers": "^1.4",
+    "composer/installers": "^2.1",
     "pressbooks/mix": "^2.1",
     "phpcompatibility/php-compatibility": "^9.3"
   },
