@@ -11,18 +11,18 @@
   ],
   "config": {
     "platform": {
-      "php": "7.3"
+      "php": "7.4"
     }
   },
   "require": {
-    "php": ">=7.3",
+    "php": ">=7.4",
     "composer/installers": "^2.1",
-    "pressbooks/mix": "^2.1",
-    "phpcompatibility/php-compatibility": "^9.3"
+    "pressbooks/mix": "^2.1"
   },
   "require-dev": {
+    "phpcompatibility/php-compatibility": "^9.3",
     "pressbooks/coding-standards": "^1.1",
-    "wpreadme2markdown/wp2md": "^3.0",
+    "wpreadme2markdown/wp2md": "^4.0",
     "yoast/phpunit-polyfills": "^1.0.1"
   },
   "scripts": {

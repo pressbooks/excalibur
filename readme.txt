@@ -1,9 +1,9 @@
 === Excalibur ===
 Contributors: greatislander, conner_bw
 Tags: publishing, SWORD, libraries, repositories
-Requires at least: 4.9.8
-Tested up to: 4.9.8
-Stable tag: 0.3.4
+Requires at least: 5.9.3
+Tested up to: 5.9.3
+Stable tag: 0.3.5
 License: GPLv3 or later, New BSD License
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,9 +21,9 @@ Installing this plugin will add "Submit to DSpace" under the Publish menu.
 
 = Requirements =
 
-* PHP >= 7.1
-* Pressbooks >= 5.5.0
-* WordPress >= 4.9.8
+* PHP >= 7.4
+* Pressbooks >= 5.34.1
+* WordPress >= 5.9.3
 
 = Installing =
 
@@ -53,6 +53,9 @@ Or, download the latest version from the releases page and unzip it into your Wo
 
 
 == Changelog ==
+= 0.3.5 =
+* Add support for Composer 2
+
 = 0.3.4 =
 * Add vanillawxr, wxr to supported export types (fixes [#13](https://github.com/pressbooks/excalibur/issues/13)): [#17](https://github.com/pressbooks/excalibur/pull/17)
 

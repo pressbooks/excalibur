@@ -15,9 +15,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [7.3, 7.4]
+        php: [7.4]
         os: [ubuntu-20.04]
-        wordpress: [5.9]
+        wordpress: [5.9.3]
         experimental: [false]
         include:
           - php: 8.0
@@ -49,7 +49,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          tools: composer:v1
+          tools: composer
           coverage: pcov
 
       - name: Install Node dependencies
