@@ -6,7 +6,6 @@
   "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/pressbooks/excalibur",
   "scripts": {
-    "install-build-tools": "npm install --no-save pressbooks-build-tools",
     "watch": "mix watch",
     "build": "npm run production",
     "production": "mix --production",

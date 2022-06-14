@@ -1,4 +1,4 @@
-name: PHPUnit
+name: Run Standards & Tests
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
       matrix:
         php: [7.4]
         os: [ubuntu-20.04]
-        wordpress: [5.9.3]
+        wordpress: [5.9.3, latest]
         experimental: [false]
         include:
           - php: 8.0
@@ -39,25 +39,12 @@ jobs:
           path: vendor
           key: ${{ matrix.php }}-php-${{ hashFiles('**/composer.lock') }}
 
-      - name: Cache Node modules
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           tools: composer
           coverage: pcov
-
-      - name: Install Node dependencies
-        run: |
-          node -v
-          npm install
-          npm run install-build-tools
-          npm run build
 
       - name: Install PHP dependencies
         run: |
@@ -67,12 +54,9 @@ jobs:
           cd ../pressbooks && composer install --no-dev
           cd ../excalibur
 
-      - name: Lint assets
-        run: npm run lint
-        if: matrix.experimental == false
-
       - name: Run PHP CodeSniffer
         run: composer standards
+        if: matrix.experimental == false
 
       - name: Install WP tests
         run: bash bin/install-wp-tests.sh wordpress_test root root localhost ${{ matrix.wordpress }}
