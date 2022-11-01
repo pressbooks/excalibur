@@ -2,9 +2,9 @@
 
 **Contributors:** greatislander, conner_bw \
 **Tags:** publishing, SWORD, libraries, repositories \
-**Requires at least:** 5.9.3 \
-**Tested up to:** 5.9.3 \
-**Stable tag:** 0.3.5 \
+**Requires at least:** 6.0.3 \
+**Tested up to:** 6.0.3 \
+**Stable tag:** 0.4.0 \
 **License:** GPLv3 or later, New BSD License \
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,52 +55,6 @@ Or, download the latest version from the releases page and unzip it into your Wo
 
 ## Changelog
 
-### 0.3.5
-
-* Add support for Composer 2
-
-### 0.3.4
-
-* Add vanillawxr, wxr to supported export types (fixes [#13](https://github.com/pressbooks/excalibur/issues/13)): [#17](https://github.com/pressbooks/excalibur/pull/17)
-
-### 0.3.3
-
-* Special Characters being escaped multiple times [fix #12](https://github.com/pressbooks/excalibur/issues/12)
-
-### 0.3.2
-
-* Update license: [991d479](https://github.com/pressbooks/excalibur/commit/991d479)
-* Update Pressbooks tested up to version: [991d479](https://github.com/pressbooks/excalibur/commit/991d479)
-
-### 0.3.1
-
-* Add release script for Travis.
-* Add Pressbooks tested up to version.
-
-### 0.3.0
-
-* Pressbooks 5 compatibility patches.
-
-### 0.2.0
-
-* Update pressbooks/mix to 2.1.
-
-### 0.1.0
-
-* Initial release.
-
-## Upgrade Notice
-
-### 0.1.0
-
-* Initial release.
-
-## License
-
-Pressbooks code is License under GPLv2 or later.
-
-The SWORD client library was originally written by Stuart Lewis (stuart@stuartlewis.com)
-as part of a JISC funded project and is licenced under the New BSD Licence. This project contains
-a modified version of that library. We acknowledge the copyright and include the original
-disclaimer for those files. See the separate LICENSE file in the `inc/protocol/swordv1/` folder
-for more info.
+### 0.4.0
+* See https://github.com/pressbooks/excalibu/releases/tag/0.4.0
+* Full release history at https://github.com/pressbooks/excalibu/releases/
