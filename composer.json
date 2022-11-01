@@ -10,16 +10,13 @@
     }
   ],
   "config": {
-    "platform": {
-      "php": "7.4"
-    },
     "allow-plugins": {
       "composer/installers": true,
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "require": {
-    "php": ">=7.4",
+    "php": ">=7.4|8.0.*",
     "composer/installers": "^2.1",
     "pressbooks/mix": "^2.1"
   },
