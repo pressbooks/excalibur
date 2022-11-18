@@ -2,9 +2,9 @@
 
 **Contributors:** greatislander, conner_bw \
 **Tags:** publishing, SWORD, libraries, repositories \
-**Requires at least:** 6.0.3 \
-**Tested up to:** 6.0.3 \
-**Stable tag:** 0.4.0 \
+**Requires at least:** 6.1.1 \
+**Tested up to:** 6.1.1 \
+**Stable tag:** 0.5.0 \
 **License:** GPLv3 or later, New BSD License \
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,9 +22,9 @@ Installing this plugin will add "Submit to DSpace" under the Publish menu.
 
 ### Requirements
 
-* PHP >= 7.4
-* Pressbooks >= 5.34.1
-* WordPress >= 5.9.3
+* PHP >= 8.0
+* Pressbooks >= 6.4.0
+* WordPress >= 6.1.1
 
 ### Installing
 
@@ -55,6 +55,6 @@ Or, download the latest version from the releases page and unzip it into your Wo
 
 ## Changelog
 
-### 0.4.0
-* See https://github.com/pressbooks/excalibu/releases/tag/0.4.0
+### 0.5.0
+* See https://github.com/pressbooks/excalibu/releases/tag/0.5.0
 * Full release history at https://github.com/pressbooks/excalibu/releases/
