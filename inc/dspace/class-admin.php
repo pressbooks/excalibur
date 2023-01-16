@@ -112,7 +112,7 @@ class Admin extends \Excalibur\Admin {
 				$this->displayTextInput( 'pb_publisher', getset( $metadata, 'pb_publisher', '' ), __( 'Publisher', 'excalibur' ), null, false );
 
 				// SWORD: Date Available
-				$this->displayTextInput( 'pb_publication_date', ( ! empty( $metadata['pb_publication_date'] ) ) ? strftime( '%Y-%m-%d', $metadata['pb_publication_date'] ) : '', __( 'Publication Date', 'excalibur' ) );
+				$this->displayTextInput( 'pb_publication_date', ( ! empty( $metadata['pb_publication_date'] ) ) ? date( 'Y-m-d', $metadata['pb_publication_date'] ) : '', __( 'Publication Date', 'excalibur' ) );
 
 				// SWORD: Abstract
 				$this->displayTextArea( 'pb_about_50', getset( $metadata, 'pb_about_50', '' ), __( 'Short Description', 'excalibur' ) );
