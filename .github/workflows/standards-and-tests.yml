@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [8.0, 8.1]
+        php: [8.0, 8.1, 8.2]
         os: [ubuntu-20.04]
         wordpress: [6.1.1, latest]
         include:
@@ -94,7 +94,7 @@ jobs:
 
       - name: Trigger Bedrock Update
         if: github.ref == 'refs/heads/dev' && matrix.experimental == false
-        uses: pressbooks/composer-autoupdate-bedrock@v1.0
+        uses: pressbooks/composer-autoupdate-bedrock@v1
         with:
           triggered-by: ${{ github.repository }}
           token: ${{ secrets.PAT_COMPOSER_UPDATE }}
