@@ -5,7 +5,7 @@ Plugin URI: https://github.com/pressbooks/excalibur/
 GitHub Plugin URI: pressbooks/excalibur
 Release Asset: true
 Description: Excalibur is a SWORD protocol client for Pressbooks.
-Version: 0.6.0
+Version: 0.6.2
 Author: Pressbooks (Book Oven Inc.)
 Author URI: https://pressbooks.org
 Requires PHP: 8.0
