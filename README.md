@@ -4,7 +4,7 @@
 **Tags:** publishing, SWORD, libraries, repositories \
 **Requires at least:** 6.1.1 \
 **Tested up to:** 6.1.1 \
-**Stable tag:** 0.6.2 \
+**Stable tag:** 0.7.0 \
 **License:** GPLv3 or later, New BSD License \
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
