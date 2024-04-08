@@ -23,7 +23,7 @@
   "require-dev": {
     "phpcompatibility/php-compatibility": "^9.3",
     "pressbooks/coding-standards": "^1.1",
-    "yoast/phpunit-polyfills": "^1.0.1"
+    "yoast/phpunit-polyfills": "^1.1"
   },
   "scripts": {
     "test": [
