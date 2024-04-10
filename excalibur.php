@@ -7,7 +7,7 @@ Release Asset: true
 Requires at least: 6.5
 Requires Plugins: pressbooks
 Description: Excalibur is a SWORD protocol client for Pressbooks.
-Version: 0.7.0
+Version: 0.8.0
 Author: Pressbooks (Book Oven Inc.)
 Author URI: https://pressbooks.org
 Requires PHP: 8.1
