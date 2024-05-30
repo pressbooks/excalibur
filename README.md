@@ -4,7 +4,9 @@
 **Tags:** publishing, SWORD, libraries, repositories \
 **Requires at least:** 6.5 \
 **Tested up to:** 6.5 \
+<!-- x-release-please-start-version -->
 **Stable tag:** 0.8.0 \
+<!-- x-release-please-end -->
 **License:** GPLv3 or later, New BSD License \
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,9 +54,5 @@ Or, download the latest version from the releases page and unzip it into your Wo
     yarn
     yarn production
 
-
-## Changelog
-
-### 0.8.0
-* See https://github.com/pressbooks/excalibur/releases/tag/0.8.0
-* Full release history at https://github.com/pressbooks/excalibur/releases/
+### Changelog
+Please see the [CHANGELOG](CHANGELOG.md) file for more information.
