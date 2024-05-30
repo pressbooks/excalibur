@@ -5,7 +5,7 @@
 **Requires at least:** 6.5 \
 **Tested up to:** 6.5 \
 <!-- x-release-please-start-version -->
-**Stable tag:** 0.8.0 \
+**Stable tag:** 0.8.1 \
 <!-- x-release-please-end -->
 **License:** GPLv3 or later, New BSD License \
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
