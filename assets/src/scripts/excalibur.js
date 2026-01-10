@@ -1,3 +1,5 @@
+import '../styles/excalibur.scss';
+
 jQuery( function ( $ ) {
 	$( document ).on( 'click', '#pb_contributing_authors .delete-row', function ( e ) {
 		e.preventDefault();

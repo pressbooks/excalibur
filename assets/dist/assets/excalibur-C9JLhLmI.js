@@ -1,0 +1,2 @@
+jQuery(function(t){t(document).on("click","#pb_contributing_authors .delete-row",function(e){e.preventDefault(),t(this).parent(".row").remove()}),t(document).on("click","#pb_contributing_authors .add-row",function(e){e.preventDefault(),t(this).before('<div class="row"><input type="text" name="pb_contributing_authors[]" value="" class="contributing-author regular-text" /> <button class="button button-small delete-row">Delete Row</button></div>')}),t("#pb_publication_date").datepicker({dateFormat:"yy-mm-dd"})});
+//# sourceMappingURL=excalibur-C9JLhLmI.js.map
