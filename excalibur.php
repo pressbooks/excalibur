@@ -42,3 +42,7 @@ require( __DIR__ . '/inc/protocol/swordv1/namespace.php' );
 if ( is_admin() ) {
 	$p = new \Excalibur\Dspace\Admin();
 }
+
+add_action('init', function () {
+	load_plugin_textdomain( 'excalibur', false, 'excalibur/languages/' );
+});
