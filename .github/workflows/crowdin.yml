@@ -30,7 +30,6 @@ jobs:
       pot_file_path: languages/excalibur.pot
       crowdin_branch_name: excalibur
       base_branch: dev
-      project_type: private
     secrets: inherit
 
   download-translations:
@@ -43,7 +42,6 @@ jobs:
       languages_dir: languages/
       crowdin_branch_name: excalibur
       base_branch: dev
-      project_type: private
     secrets: inherit
 
   seed-translations:
@@ -56,5 +54,4 @@ jobs:
       languages_dir: languages/
       crowdin_branch_name: excalibur
       base_branch: dev
-      project_type: private
     secrets: inherit
