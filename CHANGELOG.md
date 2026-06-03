@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.2](https://github.com/pressbooks/excalibur/compare/0.8.1...0.8.2) (2026-06-03)
+
+
+### Bug Fixes
+
+* add initial po and mo files for crowdin ([#93](https://github.com/pressbooks/excalibur/issues/93)) ([7e8ad19](https://github.com/pressbooks/excalibur/commit/7e8ad19cf66cae782bd010e91ad2ac9cb1a11eb8))
+
 ## [0.8.1](https://github.com/pressbooks/excalibur/compare/0.8.0...0.8.1) (2024-05-30)
 
 

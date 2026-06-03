@@ -8,7 +8,7 @@
  * Requires Plugins: pressbooks
  * Description: Excalibur is a SWORD protocol client for Pressbooks.
  * x-release-please-start-version
- * Version: 0.8.1
+ * Version: 0.8.2
  * x-release-please-end
  * Author: Pressbooks (Book Oven Inc.)
  * Author URI: https://pressbooks.org
