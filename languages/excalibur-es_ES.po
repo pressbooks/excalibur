@@ -2,18 +2,17 @@
 # This file is distributed under the same license as the Excalibur package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Excalibur 0.1.0\n"
+"Project-Id-Version: pressbooks-open-source\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/excalibur\n"
 "POT-Creation-Date: 2017-07-24 18:32:52+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-07-24 18:32:52+00:00\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-06-19 00:48\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Country: United States\n"
@@ -22,6 +21,11 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
+"X-Crowdin-Project: pressbooks-open-source\n"
+"X-Crowdin-Project-ID: 866076\n"
+"X-Crowdin-Language: es-ES\n"
+"X-Crowdin-File: /excalibur/languages/excalibur.pot\n"
+"X-Crowdin-File-ID: 225\n"
 
 #: excalibur.php:21
 msgid "Cannot find Pressbooks install."
@@ -41,16 +45,11 @@ msgid "Submit to DSpace"
 msgstr ""
 
 #: inc/dspace/class-admin.php:39
-msgid ""
-"No export files were found. Please export your book as EPUB, MOBI and/or PDF "
-"and return to this page to complete your submission."
+msgid "No export files were found. Please export your book as EPUB, MOBI and/or PDF and return to this page to complete your submission."
 msgstr ""
 
 #: inc/dspace/class-admin.php:77
-msgid ""
-"Pressbooks can submit your EPUB or PDF to a <a href=\"http://www.dspace.org/"
-"\">DSpace</a> repository. Please complete the information below before "
-"submitting."
+msgid "Pressbooks can submit your EPUB or PDF to a <a href=\"http://www.dspace.org/\">DSpace</a> repository. Please complete the information below before submitting."
 msgstr ""
 
 #: inc/dspace/class-admin.php:78
@@ -58,9 +57,7 @@ msgid "Book Information"
 msgstr ""
 
 #: inc/dspace/class-admin.php:79
-msgid ""
-"This information comes from your book&rsquo;s <a href=\"%s\">Book "
-"Information</a> page. Any changes made here will be saved there as well."
+msgid "This information comes from your book&rsquo;s <a href=\"%s\">Book Information</a> page. Any changes made here will be saved there as well."
 msgstr ""
 
 #: inc/dspace/class-admin.php:84
@@ -112,9 +109,7 @@ msgid "Submission Details"
 msgstr ""
 
 #: inc/dspace/class-admin.php:123
-msgid ""
-"This information is required to complete your DSpace submission and will be "
-"saved in case you need to resubmit your book at a later date."
+msgid "This information is required to complete your DSpace submission and will be saved in case you need to resubmit your book at a later date."
 msgstr ""
 
 #: inc/dspace/class-admin.php:126 inc/dspace/class-admin.php:134
@@ -130,9 +125,7 @@ msgid "Password*"
 msgstr ""
 
 #: inc/dspace/class-admin.php:138
-msgid ""
-"Configuration problem: You don't have access to any Dspace collections? "
-"Contact your system administrator."
+msgid "Configuration problem: You don't have access to any Dspace collections? Contact your system administrator."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -154,3 +147,4 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "https://github.com/pressbooks"
 msgstr ""
+
