@@ -3,7 +3,8 @@
 namespace Excalibur;
 
 use function Pressbooks\Utility\oxford_comma_explode;
-use PressbooksMix\Assets;
+use PressbooksFrontendTools\Assets;
+use PressbooksFrontendTools\AssetType;
 
 abstract class Admin {
 
@@ -23,12 +24,10 @@ abstract class Admin {
 			return;
 		}
 
-		$assets = new Assets( 'excalibur', 'plugin' );
-		$assets->setSrcDirectory( 'assets' )->setDistDirectory( 'dist' );
+		$assets = new Assets( 'excalibur', AssetType::PLUGIN );
 
-		wp_enqueue_style( 'excalibur/css', $assets->getPath( 'styles/excalibur.css' ), false, null );
+		$assets->enqueue( 'assets/src/scripts/excalibur.js', 'excalibur' );
 		wp_enqueue_style( 'excalibur/datepicker', PB_PLUGIN_URL . 'symbionts/custom-metadata/css/jquery-ui-smoothness.css', false, null );
-		wp_enqueue_script( 'excalibur/js', $assets->getPath( 'scripts/excalibur.js' ), [ 'jquery', 'jquery-ui-datepicker' ], null );
 	}
 
 	/**

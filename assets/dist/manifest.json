@@ -1,0 +1,11 @@
+{
+  "assets/src/scripts/excalibur.js": {
+    "file": "assets/excalibur-C9JLhLmI.js",
+    "name": "excalibur",
+    "src": "assets/src/scripts/excalibur.js",
+    "isEntry": true,
+    "css": [
+      "assets/excalibur-flCk9Lcr.css"
+    ]
+  }
+}
